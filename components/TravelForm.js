@@ -22,66 +22,84 @@ export default function TravelForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
-    const data = await response.json();
-    router.push({
-      pathname: "/plan",
-      query: { trips: JSON.stringify(data.trips) },
-    });
+
+    if (response.ok) {
+      const data = await response.json();
+      router.push({
+        pathname: "/plan",
+        query: { trips: JSON.stringify(data.trips) },
+      });
+    } else {
+      console.error("Error generating travel plan");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label>Target Countries:</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Target Countries
+        </label>
         <input
           type="number"
           name="targetCountries"
           value={formData.targetCountries}
           onChange={handleChange}
-          className="input"
+          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
         />
       </div>
       <div>
-        <label>Target Age:</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Target Age
+        </label>
         <input
           type="number"
           name="targetAge"
           value={formData.targetAge}
           onChange={handleChange}
-          className="input"
+          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
         />
       </div>
       <div>
-        <label>Current Age:</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Current Age
+        </label>
         <input
           type="number"
           name="currentAge"
           value={formData.currentAge}
           onChange={handleChange}
-          className="input"
+          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
         />
       </div>
       <div>
-        <label>Residence:</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Residence
+        </label>
         <input
           type="text"
           name="residence"
           value={formData.residence}
           onChange={handleChange}
-          className="input"
+          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
         />
       </div>
       <div>
-        <label>Visited Countries (comma-separated ISO codes):</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Visited Countries (ISO codes)
+        </label>
         <input
           type="text"
           name="visited"
           value={formData.visited}
           onChange={handleChange}
-          className="input"
+          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
         />
       </div>
-      <button type="submit" className="btn-primary">
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium text-lg"
+      >
         Plan My Travel
       </button>
     </form>
