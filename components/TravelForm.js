@@ -205,7 +205,7 @@ export default function TravelForm() {
     targetAge: "",
     currentAge: "",
     residence: "",
-    visited: "",
+    visited: [],
   });
 
   const handleChange = (e) => {
@@ -214,6 +214,10 @@ export default function TravelForm() {
 
   const handleResidenceChange = (value) => {
     setFormData({ ...formData, residence: value });
+  };
+
+  const handleVisitedChange = (value) => {
+    setFormData({ ...formData, visited: value });
   };
 
   const handleSubmit = async (e) => {
@@ -286,14 +290,12 @@ export default function TravelForm() {
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Visited Countries (ISO codes)
+          Visited Countries
         </label>
-        <input
-          type="text"
-          name="visited"
+        <Autocomplete
+          options={countries}
           value={formData.visited}
-          onChange={handleChange}
-          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
+          onChange={handleVisitedChange}
         />
       </div>
       <button
