@@ -223,20 +223,24 @@ export default function TravelForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/travel-plan", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      router.push({
-        pathname: "/plan",
-        query: { trips: JSON.stringify(data.trips) },
+    try {
+      const response = await fetch("/api/travel-plan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-    } else {
-      console.error("Error generating travel plan");
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Travel plan saved successfully:", data);
+        router.push("/plan");
+      } else {
+        console.error("Error saving travel plan:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 

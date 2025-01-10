@@ -1,34 +1,34 @@
+const pool = require("../../lib/db");
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { targetCountries, targetAge, currentAge, residence, visited } =
       req.body;
 
-    // Simulate trip generation (replace with actual logic)
-    const trips = generateTrips(
-      targetCountries,
-      targetAge,
-      currentAge,
-      residence,
-      visited
-    );
+    try {
+      const travelPlanResult = await pool.query(
+        "INSERT INTO travel_plans (target_countries, target_age, current_age, residence) VALUES ($1, $2, $3, $4) RETURNING id",
+        [targetCountries, targetAge, currentAge, residence]
+      );
 
-    return res.status(200).json({ trips });
+      const travelPlanId = travelPlanResult.rows[0].id;
+
+      const visitedInsertPromises = visited.map((country) =>
+        pool.query(
+          "INSERT INTO visited_countries (travel_plan_id, country) VALUES ($1, $2)",
+          [travelPlanId, country]
+        )
+      );
+
+      await Promise.all(visitedInsertPromises);
+
+      res.status(201).json({ message: "Travel plan created successfully!" });
+    } catch (error) {
+      console.error("Error saving travel plan:", error);
+      res.status(500).json({ error: "Failed to save travel plan" });
+    }
   } else {
-    return res.status(405).json({ message: "Method Not Allowed" });
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-}
-
-// A mock function to generate trips (replace with your real trip logic)
-function generateTrips(
-  targetCountries,
-  targetAge,
-  currentAge,
-  residence,
-  visited
-) {
-  // Simulating a basic trip list
-  return [
-    { date: "2025-01-12", location: "Budapest" },
-    { date: "2025-01-20", location: "Prague" },
-  ];
 }
