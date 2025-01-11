@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Autocomplete from "./Autocomplete";
 
@@ -199,6 +199,13 @@ const countries = [
 ];
 
 export default function TravelForm() {
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    setUserId(storedUserId);
+  }, []);
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     targetCountries: "",
@@ -229,7 +236,7 @@ export default function TravelForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, userId }),
       });
 
       if (response.ok) {

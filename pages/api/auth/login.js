@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
       expiresIn: "1h",
     });
-    res.status(200).json({ token });
+    res.status(200).json({ token, userId: user.id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
