@@ -18,6 +18,16 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   return R * c; // Distance in kilometers
 };
 
+const countryToFlagEmoji = (countryCode) => {
+  return countryCode
+    .toUpperCase()
+    .split("")
+    .map((char) =>
+      String.fromCodePoint(char.charCodeAt(0) + 0x1f1e6 - "A".charCodeAt(0))
+    )
+    .join("");
+};
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const {
@@ -74,7 +84,7 @@ export default async function handler(req, res) {
 
       // Calculate distances from residence
       const distances = unvisitedCountries.map((country) => ({
-        name: country.name,
+        name: `${country.name} ${countryToFlagEmoji(country.id)}`,
         distance: calculateDistance(
           resLat,
           resLon,
