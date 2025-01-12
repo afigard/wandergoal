@@ -1,4 +1,5 @@
 const pool = require("../../lib/db");
+const { kmeans } = require("ml-kmeans");
 
 // Helper function: Haversine formula to calculate distance
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -84,7 +85,7 @@ export default async function handler(req, res) {
 
       // Calculate distances from residence
       const distances = unvisitedCountries.map((country) => ({
-        name: `${country.name} ${countryToFlagEmoji(country.id)}`,
+        ...country,
         distance: calculateDistance(
           resLat,
           resLon,
@@ -96,30 +97,41 @@ export default async function handler(req, res) {
       // Sort countries by proximity
       distances.sort((a, b) => a.distance - b.distance);
 
-      // Determine the total months and trips
+      // Limit countries to the remaining target countries
+      const limitedCountries = distances.slice(0, remainingCountries);
+
+      // Cluster countries for trips
+      const clusterCountries = (countries, numClusters) => {
+        const coordinates = countries.map((c) => [c.latitude, c.longitude]);
+        const result = kmeans(
+          coordinates,
+          Math.min(numClusters, countries.length)
+        );
+        const clusters = Array.from({ length: numClusters }, () => []);
+        result.clusters.forEach((clusterIndex, i) => {
+          clusters[clusterIndex].push(countries[i]);
+        });
+        return clusters.filter((cluster) => cluster.length > 0); // Remove empty clusters
+      };
+
       const totalMonths = (targetAge - currentAge) * 12;
       const maxTrips = Math.min(remainingCountries, totalMonths);
       const tripIntervalMonths = Math.floor(totalMonths / maxTrips);
 
-      // Group countries for trips if needed
-      const countriesPerTrip = Math.ceil(remainingCountries / maxTrips);
-      const groupedTrips = Array.from({ length: maxTrips }, (_, i) => {
-        const startIndex = i * countriesPerTrip;
-        const countriesInThisTrip = distances
-          .slice(startIndex, startIndex + countriesPerTrip)
-          .map((country) => country.name);
-        return {
-          travelPlanId,
-          userId,
-          countries: countriesInThisTrip,
-          startDate: new Date(
-            new Date().setMonth(new Date().getMonth() + tripIntervalMonths * i)
-          ),
-        };
-      });
+      // Clustered trips
+      const clusteredTrips = clusterCountries(limitedCountries, maxTrips);
+
+      const trips = clusteredTrips.map((cluster, i) => ({
+        travelPlanId,
+        userId,
+        countries: cluster.map((c) => `${c.name} ${countryToFlagEmoji(c.id)}`),
+        startDate: new Date(
+          new Date().setMonth(new Date().getMonth() + tripIntervalMonths * i)
+        ),
+      }));
 
       // Save trips to the database
-      const tripInsertPromises = groupedTrips.map((trip) =>
+      const tripInsertPromises = trips.map((trip) =>
         pool.query(
           `INSERT INTO trips (travel_plan_id, user_id, country_name, start_date)
            VALUES ($1, $2, $3, $4)`,
@@ -142,7 +154,7 @@ export default async function handler(req, res) {
       );
       await Promise.all(visitedInsertPromises);
 
-      res.status(201).json({ trips: groupedTrips });
+      res.status(201).json({ trips });
     } catch (error) {
       console.error("Error generating travel plan:", error);
       res.status(500).json({ error: "Failed to generate travel plan" });
