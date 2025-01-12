@@ -124,44 +124,52 @@ export default async function handler(req, res) {
     }
 
     try {
-      // Retrieve travel plan for the user
-      const travelPlanResult = await pool.query(
-        `SELECT id, target_countries, target_age, current_age, residence
+      // Retrieve all travel plans for the user
+      const travelPlansResult = await pool.query(
+        `SELECT id, target_countries, target_age, current_age, residence, created_at,
+                ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY created_at ASC) AS plan_number
          FROM travel_plans
-         WHERE user_id = $1`,
+         WHERE user_id = $1
+         ORDER BY created_at DESC`,
         [userId]
       );
 
-      const travelPlan = travelPlanResult.rows[0];
-      if (!travelPlan) {
-        return res.status(404).json({ error: "Travel plan not found" });
+      const travelPlans = travelPlansResult.rows;
+
+      if (!travelPlans.length) {
+        return res.status(404).json({ error: "No travel plans found" });
       }
 
-      // Retrieve trips for the user using the travel_plan_id
-      const tripsResult = await pool.query(
-        `SELECT country_name AS country, start_date AS "startDate"
-         FROM trips
-         WHERE travel_plan_id = $1
-         ORDER BY start_date ASC`,
-        [travelPlan.id]
+      // Retrieve trips and visited countries for each travel plan
+      const detailedPlans = await Promise.all(
+        travelPlans.map(async (plan) => {
+          const tripsResult = await pool.query(
+            `SELECT country_name AS country, start_date AS "startDate"
+             FROM trips
+             WHERE travel_plan_id = $1
+             ORDER BY start_date ASC`,
+            [plan.id]
+          );
+
+          const visitedResult = await pool.query(
+            `SELECT country
+             FROM visited_countries
+             WHERE travel_plan_id = $1`,
+            [plan.id]
+          );
+
+          return {
+            ...plan,
+            trips: tripsResult.rows,
+            visitedCountries: visitedResult.rows.map((row) => row.country),
+          };
+        })
       );
 
-      const trips = tripsResult.rows;
-
-      // Retrieve visited countries for the user
-      const visitedResult = await pool.query(
-        `SELECT country
-         FROM visited_countries
-         WHERE travel_plan_id = $1`,
-        [travelPlan.id]
-      );
-
-      const visitedCountries = visitedResult.rows.map((row) => row.country);
-
-      res.status(200).json({ travelPlan, trips, visitedCountries });
+      res.status(200).json({ travelPlans: detailedPlans });
     } catch (error) {
-      console.error("Error fetching travel plan:", error);
-      res.status(500).json({ error: "Failed to fetch travel plan" });
+      console.error("Error fetching travel plans:", error);
+      res.status(500).json({ error: "Failed to fetch travel plans" });
     }
   } else {
     res.setHeader("Allow", ["POST", "GET"]);
