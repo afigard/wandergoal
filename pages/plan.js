@@ -54,17 +54,23 @@ export default function Plan() {
             <p>Residence: {plan.residence}</p>
             <p>
               Visited Countries:
-              {plan.visitedCountries.length > 0 ? (
-                plan.visitedCountries.map((country, idx) => (
-                  <li key={idx}>{country}</li>
-                ))
-              ) : (
-                <li>No countries visited yet.</li>
-              )}
+              <ul className="list-disc list-inside">
+                {plan.visitedCountries.length > 0 ? (
+                  plan.visitedCountries.map((country, idx) => (
+                    <li key={idx}>{country}</li>
+                  ))
+                ) : (
+                  <li>No countries visited yet.</li>
+                )}
+              </ul>
             </p>
-            <p>Creation Date: {new Date(plan.created_at).toLocaleDateString()}</p>
+            <p>
+              Creation Date: {new Date(plan.created_at).toLocaleDateString()}
+            </p>
 
-            <h3 className="text-xl font-medium mt-4 mb-2">Recommended Trips:</h3>
+            <h3 className="text-xl font-medium mt-4 mb-2">
+              Recommended Trips:
+            </h3>
             {plan.trips.length > 0 ? (
               <TravelPlan trips={plan.trips} />
             ) : (

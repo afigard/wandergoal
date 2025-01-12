@@ -52,6 +52,14 @@ export default async function handler(req, res) {
       }
       const { latitude: resLat, longitude: resLon } = residenceResult.rows[0];
 
+      // Calculate remaining target countries
+      const remainingCountries = targetCountries - visited.length;
+      if (remainingCountries <= 0) {
+        return res
+          .status(400)
+          .json({ error: "No more countries to plan trips for." });
+      }
+
       // Get all unvisited countries
       const unvisitedResult = await pool.query(
         `SELECT id, name, latitude, longitude
@@ -78,26 +86,39 @@ export default async function handler(req, res) {
       // Sort countries by proximity
       distances.sort((a, b) => a.distance - b.distance);
 
-      // Generate trips based on user inputs
-      const yearsAvailable = targetAge - currentAge;
-      const tripInterval = Math.floor((yearsAvailable * 12) / targetCountries); // in months
-      const trips = distances
-        .slice(0, targetCountries)
-        .map((country, index) => ({
-          travelPlanId, // Include travelPlanId in each trip object
-          userId, // Include userId in each trip object
-          country: country.name,
-          startDate: new Date(
-            new Date().setMonth(new Date().getMonth() + tripInterval * index)
-          ),
-        }));
+      // Determine the total months and trips
+      const totalMonths = (targetAge - currentAge) * 12;
+      const maxTrips = Math.min(remainingCountries, totalMonths);
+      const tripIntervalMonths = Math.floor(totalMonths / maxTrips);
 
-      // Save trips to the database with the travel_plan_id
-      const tripInsertPromises = trips.map((trip) =>
+      // Group countries for trips if needed
+      const countriesPerTrip = Math.ceil(remainingCountries / maxTrips);
+      const groupedTrips = Array.from({ length: maxTrips }, (_, i) => {
+        const startIndex = i * countriesPerTrip;
+        const countriesInThisTrip = distances
+          .slice(startIndex, startIndex + countriesPerTrip)
+          .map((country) => country.name);
+        return {
+          travelPlanId,
+          userId,
+          countries: countriesInThisTrip,
+          startDate: new Date(
+            new Date().setMonth(new Date().getMonth() + tripIntervalMonths * i)
+          ),
+        };
+      });
+
+      // Save trips to the database
+      const tripInsertPromises = groupedTrips.map((trip) =>
         pool.query(
           `INSERT INTO trips (travel_plan_id, user_id, country_name, start_date)
            VALUES ($1, $2, $3, $4)`,
-          [trip.travelPlanId, trip.userId, trip.country, trip.startDate]
+          [
+            trip.travelPlanId,
+            trip.userId,
+            trip.countries.join(", "),
+            trip.startDate,
+          ]
         )
       );
       await Promise.all(tripInsertPromises);
@@ -111,7 +132,7 @@ export default async function handler(req, res) {
       );
       await Promise.all(visitedInsertPromises);
 
-      res.status(201).json({ trips });
+      res.status(201).json({ trips: groupedTrips });
     } catch (error) {
       console.error("Error generating travel plan:", error);
       res.status(500).json({ error: "Failed to generate travel plan" });
