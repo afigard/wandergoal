@@ -52,8 +52,8 @@ export default function Plan() {
             <p>Target Age: {plan.target_age}</p>
             <p>Current Age: {plan.current_age}</p>
             <p>Residence: {plan.residence}</p>
-            <p>
-              Visited Countries:
+            <div>
+              <p>Visited Countries:</p>
               <ul className="list-disc list-inside">
                 {plan.visitedCountries.length > 0 ? (
                   plan.visitedCountries.map((country, idx) => (
@@ -63,7 +63,7 @@ export default function Plan() {
                   <li>No countries visited yet.</li>
                 )}
               </ul>
-            </p>
+            </div>
             <p>
               Creation Date: {new Date(plan.created_at).toLocaleDateString()}
             </p>
