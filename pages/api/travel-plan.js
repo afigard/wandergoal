@@ -101,17 +101,69 @@ export default async function handler(req, res) {
       const limitedCountries = distances.slice(0, remainingCountries);
 
       // Cluster countries for trips
-      const clusterCountries = (countries, numClusters) => {
-        const coordinates = countries.map((c) => [c.latitude, c.longitude]);
-        const result = kmeans(
-          coordinates,
-          Math.min(numClusters, countries.length)
-        );
-        const clusters = Array.from({ length: numClusters }, () => []);
-        result.clusters.forEach((clusterIndex, i) => {
-          clusters[clusterIndex].push(countries[i]);
+      const clusterCountriesWithProximity = (
+        countries,
+        maxClusters,
+        distanceThreshold
+      ) => {
+        // Helper to calculate pairwise distances
+        const calculatePairwiseDistances = (countries) =>
+          countries.map((a) =>
+            countries.map((b) =>
+              calculateDistance(
+                a.latitude,
+                a.longitude,
+                b.latitude,
+                b.longitude
+              )
+            )
+          );
+
+        const distancesMatrix = calculatePairwiseDistances(countries);
+
+        // Group countries based on distance threshold
+        const clusters = [];
+        const visited = new Set();
+
+        countries.forEach((country, i) => {
+          if (!visited.has(i)) {
+            const cluster = [country];
+            visited.add(i);
+
+            countries.forEach((otherCountry, j) => {
+              if (
+                i !== j &&
+                !visited.has(j) &&
+                distancesMatrix[i][j] <= distanceThreshold
+              ) {
+                cluster.push(otherCountry);
+                visited.add(j);
+              }
+            });
+
+            clusters.push(cluster);
+          }
         });
-        return clusters.filter((cluster) => cluster.length > 0); // Remove empty clusters
+
+        // If clusters exceed maxClusters, apply k-means on cluster centroids to merge
+        if (clusters.length > maxClusters) {
+          const centroids = clusters.map((cluster) => {
+            const avgLat =
+              cluster.reduce((sum, c) => sum + c.latitude, 0) / cluster.length;
+            const avgLon =
+              cluster.reduce((sum, c) => sum + c.longitude, 0) / cluster.length;
+            return [avgLat, avgLon];
+          });
+
+          const mergedClusters = kmeans(centroids, maxClusters).clusters.map(
+            (clusterIndex) =>
+              clusterIndex.map((index) => clusters[index]).flat()
+          );
+
+          return mergedClusters.filter((c) => c.length > 0);
+        }
+
+        return clusters;
       };
 
       const totalMonths = (targetAge - currentAge) * 12;
@@ -119,7 +171,11 @@ export default async function handler(req, res) {
       const tripIntervalMonths = Math.floor(totalMonths / maxTrips);
 
       // Clustered trips
-      const clusteredTrips = clusterCountries(limitedCountries, maxTrips);
+      const clusteredTrips = clusterCountriesWithProximity(
+        limitedCountries,
+        maxTrips,
+        250
+      );
 
       const trips = clusteredTrips.map((cluster, i) => ({
         travelPlanId,
