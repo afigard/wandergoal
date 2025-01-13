@@ -200,12 +200,6 @@ const countries = [
 
 export default function TravelForm() {
   const [userId, setUserId] = useState(null);
-
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    setUserId(storedUserId);
-  }, []);
-
   const router = useRouter();
   const [formData, setFormData] = useState({
     targetCountries: "",
@@ -214,6 +208,39 @@ export default function TravelForm() {
     residence: "",
     visited: [],
   });
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    setUserId(storedUserId);
+
+    if (storedUserId) {
+      const fetchLastPlan = async () => {
+        try {
+          const response = await fetch(
+            `/api/user-last-plan?userId=${storedUserId}`
+          );
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.lastPlan) {
+              console.log("Last travel plan:", data.lastPlan);
+              setFormData({
+                ...formData,
+                currentAge: data.lastPlan.current_age || "",
+                residence: data.lastPlan.residence || "",
+                visited: data.lastPlan.visitedCountries || [],
+              });
+            }
+          } else {
+            console.error("Error fetching last plan:", await response.json());
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
+      fetchLastPlan();
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
