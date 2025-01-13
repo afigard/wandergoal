@@ -222,7 +222,6 @@ export default function TravelForm() {
           if (response.ok) {
             const data = await response.json();
             if (data.success && data.lastPlan) {
-              console.log("Last travel plan:", data.lastPlan);
               setFormData({
                 ...formData,
                 currentAge: data.lastPlan.current_age || "",
@@ -268,7 +267,6 @@ export default function TravelForm() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Travel plan saved successfully:", data);
         router.push("/plan");
       } else {
         console.error("Error saving travel plan:", await response.json());
