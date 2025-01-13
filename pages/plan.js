@@ -5,12 +5,15 @@ import TravelPlan from "../components/TravelPlan";
 export default function Plan() {
   const [travelPlans, setTravelPlans] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
 
     if (!userId) {
       console.error("User not logged in");
+      setLoading(false);
+      setError("User not logged in");
       return;
     }
 
@@ -19,13 +22,19 @@ export default function Plan() {
         const response = await fetch(`/api/travel-plan?userId=${userId}`);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch travel plans");
+          if (response.status === 404) {
+            setTravelPlans([]);
+            return;
+          }
+          throw new Error(`Failed to fetch travel plans: ${response.status}`);
         }
 
         const data = await response.json();
         setTravelPlans(data.travelPlans || []);
       } catch (error) {
         console.error("Error fetching travel plans:", error);
+        setError(error.message);
+        setTravelPlans([]);
       } finally {
         setLoading(false);
       }
@@ -40,7 +49,9 @@ export default function Plan() {
       <h1 className="text-3xl font-bold mb-6 text-center">My Travel Plans</h1>
       {loading ? (
         <p>Loading travel plans...</p>
-      ) : (
+      ) : error ? (
+        <p className="text-center text-red-500">Error: {error}</p>
+      ) : travelPlans.length > 0 ? (
         travelPlans.map((plan) => (
           <div key={plan.id} className="mb-8 border p-4 rounded shadow">
             <h2 className="text-2xl font-semibold mb-4">
@@ -78,6 +89,11 @@ export default function Plan() {
             )}
           </div>
         ))
+      ) : (
+        <p className="text-center text-gray-500">
+          You don't have any travel plans yet. Start planning your next
+          adventure!
+        </p>
       )}
     </div>
   );
