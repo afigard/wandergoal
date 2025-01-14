@@ -69,14 +69,38 @@ export default async function handler(req, res) {
           .json({ error: "No more countries to plan trips for." });
       }
 
-      // Get all unvisited countries
+      // List of countries to exclude
+      const excludedCountries = [
+        "Afghanistan",
+        "Belarus",
+        "Central African Republic",
+        "Chad",
+        "Congo",
+        "Democratic People's Republic of Korea",
+        "Democratic Republic of the Congo",
+        "Eritrea",
+        "Iran (Islamic Republic of)",
+        "Iraq",
+        "Libya",
+        "Mali",
+        "Myanmar",
+        "Russian Federation",
+        "Somalia",
+        "South Sudan",
+        "Sudan",
+        "Syrian Arab Republic",
+        "Yemen",
+      ];
+
       const unvisitedResult = await pool.query(
         `SELECT id, name, latitude, longitude
          FROM countries
          WHERE name != $1 AND name NOT IN (${visited.map(
            (_, i) => `$${i + 2}`
-         )})`,
-        [residence, ...visited]
+         )}) AND name NOT IN (${excludedCountries.map(
+          (country, i) => `$${i + visited.length + 2}`
+        )})`,
+        [residence, ...visited, ...excludedCountries]
       );
 
       const unvisitedCountries = unvisitedResult.rows;
