@@ -23,29 +23,37 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-blue-600 text-white p-4 mb-6">
-      <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-6">
-          <Link href="/" className="text-lg sm:text-xl font-bold">
+    <header className="bg-green-600 text-white w-full">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
+        {/* Navigation Links */}
+        <div className="flex items-center space-x-6">
+          <Link
+            href="/"
+            className="text-lg sm:text-xl font-bold hover:underline"
+          >
             Home
           </Link>
-          <Link href="/plan" className="text-lg sm:text-xl font-bold">
+          <Link
+            href="/plan"
+            className="text-lg sm:text-xl font-bold hover:underline"
+          >
             Travel Plans
           </Link>
         </div>
 
-        <div className="space-y-2 sm:space-y-0 sm:space-x-4">
+        {/* Authentication Buttons */}
+        <div className="flex items-center space-x-4">
           {!isAuthenticated ? (
             <>
               <Link
                 href="/login"
-                className="text-lg border border-white px-3 py-2 rounded sm:px-4"
+                className="text-sm sm:text-lg border border-white px-3 py-2 rounded hover:bg-white hover:text-green-600 transition"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="text-lg bg-white text-blue-600 px-3 py-2 rounded sm:px-4"
+                className="text-sm sm:text-lg bg-white text-green-600 px-3 py-2 rounded hover:bg-green-700 hover:text-white transition"
               >
                 Sign Up
               </Link>
@@ -53,7 +61,7 @@ const Header = () => {
           ) : (
             <button
               onClick={handleLogout}
-              className="bg-red-600 text-white px-3 py-2 rounded sm:px-4"
+              className="text-sm sm:text-lg bg-red-600 px-3 py-2 rounded hover:bg-red-700 transition"
             >
               Logout
             </button>

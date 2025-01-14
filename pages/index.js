@@ -21,12 +21,19 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center">
       <Header />
-      <h1 className="text-3xl font-bold text-center mb-6">
-        WanderGoal: Plan Your Adventures
-      </h1>
-      <TravelForm />
+      <main className="container mx-auto px-4 py-8 flex flex-col items-center">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-green-600 text-center mb-8">
+          WanderGoal: Plan Your Adventures 🚕🚌🚃✈️🌍
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-700 text-center mb-6 max-w-2xl">
+          Your personalized travel planner to help you achieve your adventure
+          goals. Set your targets, plan your trips, and make every journey
+          memorable!
+        </p>
+        <TravelForm />
+      </main>
     </div>
   );
 }

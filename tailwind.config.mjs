@@ -7,8 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        green: {
+          600: "#4CAF50",
+          700: "#388E3C",
+        },
+        red: {
+          600: "#FF5252",
+          700: "#E53935",
+        },
       },
     },
   },

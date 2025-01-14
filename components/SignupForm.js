@@ -78,7 +78,7 @@ export default function SignupForm() {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium text-lg"
+          className="w-full bg-green-600 text-white py-3 rounded-lg font-medium text-lg"
           disabled={loading}
         >
           {loading ? "Signing up..." : "Sign Up"}
@@ -87,7 +87,7 @@ export default function SignupForm() {
 
       <p className="mt-4 text-center">
         Already have an account?{" "}
-        <Link href="/login" className="text-blue-600">
+        <Link href="/login" className="text-green-600">
           Log in here
         </Link>
       </p>

@@ -277,9 +277,12 @@ export default function TravelForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg space-y-6"
+    >
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
           Target Countries
         </label>
         <input
@@ -287,11 +290,12 @@ export default function TravelForm() {
           name="targetCountries"
           value={formData.targetCountries}
           onChange={handleChange}
-          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
+          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="Enter your target countries"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
           Target Age
         </label>
         <input
@@ -299,11 +303,12 @@ export default function TravelForm() {
           name="targetAge"
           value={formData.targetAge}
           onChange={handleChange}
-          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
+          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="Enter your target age"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
           Current Age
         </label>
         <input
@@ -311,32 +316,35 @@ export default function TravelForm() {
           name="currentAge"
           value={formData.currentAge}
           onChange={handleChange}
-          className="mt-1 block w-full p-3 border border-gray-300 rounded-lg text-lg"
+          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="Enter your current age"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
           Residence
         </label>
         <Autocomplete
           options={countries}
           value={formData.residence}
           onChange={handleResidenceChange}
+          className="mt-1"
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
           Visited Countries
         </label>
         <Autocomplete
           options={countries}
           value={formData.visited}
           onChange={handleVisitedChange}
+          className="mt-1"
         />
       </div>
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium text-lg"
+        className="w-full bg-green-600 text-white py-3 rounded-lg font-medium text-lg hover:bg-green-700 transition"
       >
         Plan My Travel
       </button>
