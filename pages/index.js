@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
 import TravelForm from "../components/TravelForm";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function Home() {
         </p>
         <TravelForm />
       </main>
+      <Footer />
     </div>
   );
 }
