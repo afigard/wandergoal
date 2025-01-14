@@ -63,9 +63,7 @@ export default async function handler(req, res) {
       }
       const { latitude: resLat, longitude: resLon } = residenceResult.rows[0];
 
-      // Calculate remaining target countries
-      const remainingCountries = targetCountries - visited.length;
-      if (remainingCountries <= 0) {
+      if (targetCountries <= 0) {
         return res
           .status(400)
           .json({ error: "No more countries to plan trips for." });
@@ -98,7 +96,7 @@ export default async function handler(req, res) {
       distances.sort((a, b) => a.distance - b.distance);
 
       // Limit countries to the remaining target countries
-      const limitedCountries = distances.slice(0, remainingCountries);
+      const limitedCountries = distances.slice(0, targetCountries);
 
       // Cluster countries for trips
       const clusterCountriesWithProximity = (
@@ -167,7 +165,7 @@ export default async function handler(req, res) {
       };
 
       const totalMonths = (targetAge - currentAge) * 12;
-      const maxTrips = Math.min(remainingCountries, totalMonths);
+      const maxTrips = Math.min(targetCountries, totalMonths);
       const tripIntervalMonths = Math.floor(totalMonths / maxTrips);
 
       // Clustered trips

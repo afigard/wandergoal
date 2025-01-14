@@ -283,33 +283,7 @@ export default function TravelForm() {
     >
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">
-          Target Countries
-        </label>
-        <input
-          type="number"
-          name="targetCountries"
-          value={formData.targetCountries}
-          onChange={handleChange}
-          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
-          placeholder="Enter your target countries"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
-          Target Age
-        </label>
-        <input
-          type="number"
-          name="targetAge"
-          value={formData.targetAge}
-          onChange={handleChange}
-          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
-          placeholder="Enter your target age"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
-          Current Age
+          I am ... years old
         </label>
         <input
           type="number"
@@ -322,7 +296,33 @@ export default function TravelForm() {
       </div>
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">
-          Residence
+          I want to visit ... more countries
+        </label>
+        <input
+          type="number"
+          name="targetCountries"
+          value={formData.targetCountries}
+          onChange={handleChange}
+          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="Enter your target countries"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
+          By the age of ...
+        </label>
+        <input
+          type="number"
+          name="targetAge"
+          value={formData.targetAge}
+          onChange={handleChange}
+          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          placeholder="Enter your target age"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">
+          I live in ...
         </label>
         <Autocomplete
           options={countries}
@@ -333,7 +333,7 @@ export default function TravelForm() {
       </div>
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">
-          Visited Countries
+          And I have already been to ...
         </label>
         <Autocomplete
           options={countries}

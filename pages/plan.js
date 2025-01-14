@@ -67,11 +67,11 @@ export default function Plan() {
               <h3 className="text-xl font-medium mt-4 mb-2 text-green-600">
                 Details:
               </h3>
+              <p className="text-gray-700">Current Age: {plan.current_age}</p>
               <p className="text-gray-700">
                 Target Countries: {plan.target_countries}
               </p>
               <p className="text-gray-700">Target Age: {plan.target_age}</p>
-              <p className="text-gray-700">Current Age: {plan.current_age}</p>
               <p className="text-gray-700">Residence: {plan.residence}</p>
               <div className="mt-2">
                 <p className="text-gray-700 font-medium">Visited Countries:</p>
