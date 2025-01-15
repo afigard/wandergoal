@@ -1,5 +1,7 @@
 import bcryptjs from "bcryptjs";
 import db from "../../../lib/db";
+import crypto from "crypto";
+import sendEmail from "../../../lib/sendEmail";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -14,12 +16,27 @@ export default async function handler(req, res) {
 
   try {
     const hashedPassword = await bcryptjs.hash(password, 10);
+
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+
     const { rows } = await db.query(
-      `INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email`,
-      [email, hashedPassword]
+      `INSERT INTO users (email, password_hash, verification_token, verified)
+       VALUES ($1, $2, $3, $4)
+       RETURNING id, email`,
+      [email, hashedPassword, verificationToken, false]
     );
 
-    res.status(201).json({ user: rows[0] });
+    // TODO: Change URL in production
+    const verificationLink = `http://localhost:3000/verify?token=${verificationToken}`;
+    await sendEmail({
+      to: email,
+      subject: "Verify Your Email",
+      text: `Please click the following link to verify your email: ${verificationLink}`,
+    });
+
+    res.status(201).json({
+      message: "Signup successful. Check your email for verification.",
+    });
   } catch (error) {
     if (error.code === "23505") {
       res.status(409).json({ error: "Email already exists" });

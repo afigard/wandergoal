@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
   try {
     const { rows } = await db.query(
-      `SELECT id, password_hash FROM users WHERE email = $1`,
+      `SELECT id, password_hash, verified FROM users WHERE email = $1`,
       [email]
     );
 
@@ -25,6 +25,10 @@ export default async function handler(req, res) {
       return res
         .status(401)
         .json({ error: "The email address you entered does not exist." });
+    } else if (!rows[0].verified) {
+      return res
+        .status(401)
+        .json({ error: "Email not verified. Please verify your email." });
     }
 
     const user = rows[0];
