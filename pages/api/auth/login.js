@@ -22,14 +22,18 @@ export default async function handler(req, res) {
     );
 
     if (!rows.length) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res
+        .status(401)
+        .json({ error: "The email address you entered does not exist." });
     }
 
     const user = rows[0];
     const isMatch = await bcryptjs.compare(password, user.password_hash);
 
     if (!isMatch) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({
+        error: "The password you entered is incorrect. Please try again.",
+      });
     }
 
     const token = jwt.sign({ userId: user.id }, SECRET_KEY, {

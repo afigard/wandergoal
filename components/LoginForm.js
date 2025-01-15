@@ -31,7 +31,7 @@ export default function LoginForm() {
       router.push("/");
     } else {
       const data = await response.json();
-      setError(data.message || "Login failed. Please try again.");
+      setError(data.error || "Login failed. Please try again.");
     }
   };
 
