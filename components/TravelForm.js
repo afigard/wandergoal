@@ -248,7 +248,14 @@ export default function TravelForm() {
   };
 
   const handleResidenceChange = (value) => {
-    setFormData({ ...formData, residence: value });
+    setFormData((prevFormData) => {
+      const alreadyVisited = prevFormData.visited.includes(value);
+      const updatedVisited = alreadyVisited
+        ? prevFormData.visited
+        : [...prevFormData.visited, value];
+
+      return { ...prevFormData, residence: value, visited: updatedVisited };
+    });
   };
 
   const handleVisitedChange = (value) => {
