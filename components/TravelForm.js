@@ -275,7 +275,6 @@ export default function TravelForm() {
       });
 
       if (response.ok) {
-        const data = await response.json();
         router.push("/plan");
       } else {
         console.error("Error saving travel plan:", await response.json());
