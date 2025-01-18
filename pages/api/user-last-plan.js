@@ -1,13 +1,7 @@
 const pool = require("../../lib/db");
 
 export default async function handler(req, res) {
-  const { userId } = req.query;
-
-  if (!userId) {
-    return res
-      .status(400)
-      .json({ success: false, error: "User ID is required" });
-  }
+  const { guestId } = req.query;
 
   try {
     // Query for the latest travel plan for the user
@@ -19,7 +13,7 @@ export default async function handler(req, res) {
       ORDER BY created_at DESC
       LIMIT 1
       `,
-      [userId]
+      [guestId]
     );
 
     if (travelPlanResult.rows.length === 0) {
