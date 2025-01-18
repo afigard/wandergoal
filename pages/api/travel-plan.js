@@ -181,10 +181,14 @@ export default async function handler(req, res) {
             return [avgLat, avgLon];
           });
 
-          const mergedClusters = kmeans(centroids, maxClusters).clusters.map(
-            (clusterIndex) =>
-              clusterIndex.map((index) => clusters[index]).flat()
-          );
+          // Perform k-means clustering
+          const kmeansResult = kmeans(centroids, maxClusters);
+
+          // Map k-means cluster indices to original clusters
+          const mergedClusters = Array.from({ length: maxClusters }, () => []);
+          kmeansResult.clusters.forEach((clusterIndex, index) => {
+            mergedClusters[clusterIndex].push(...clusters[index]);
+          });
 
           return mergedClusters.filter((c) => c.length > 0);
         }
