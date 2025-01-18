@@ -1,26 +1,8 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Header from "../components/Header";
 import TravelForm from "../components/TravelForm";
 import Footer from "../components/Footer";
 
 export default function Home() {
-  const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    } else {
-      setIsAuthenticated(true);
-    }
-  }, [router]);
-
-  if (!isAuthenticated) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center">
       <Header />

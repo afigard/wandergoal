@@ -1,4 +1,5 @@
 const pool = require("../../lib/db");
+const { handleGuestUser } = require("../../lib/guestUser");
 const { kmeans } = require("ml-kmeans");
 
 // Helper function: Haversine formula to calculate distance
@@ -37,18 +38,21 @@ export default async function handler(req, res) {
       currentAge,
       residence,
       visited,
-      userId,
+      guestId,
     } = req.body;
 
-    if (!userId) {
+    if (!guestId) {
       return res.status(400).json({ error: "User ID is required" });
     }
 
     try {
+      // Ensure the guest user exists in the database and create one if it doesn't
+      await handleGuestUser(guestId);
+
       // Create the travel plan in the travel_plans table
       const travelPlanResult = await pool.query(
         "INSERT INTO travel_plans (target_countries, target_age, current_age, residence, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id",
-        [targetCountries, targetAge, currentAge, residence, userId]
+        [targetCountries, targetAge, currentAge, residence, guestId]
       );
 
       const travelPlanId = travelPlanResult.rows[0].id;
@@ -201,7 +205,7 @@ export default async function handler(req, res) {
 
       const trips = clusteredTrips.map((cluster, i) => ({
         travelPlanId,
-        userId,
+        guestId,
         countries: cluster.map((c) => `${c.name} ${countryToFlagEmoji(c.id)}`),
         startDate: new Date(
           new Date().setMonth(new Date().getMonth() + tripIntervalMonths * i)
@@ -215,7 +219,7 @@ export default async function handler(req, res) {
            VALUES ($1, $2, $3, $4)`,
           [
             trip.travelPlanId,
-            trip.userId,
+            trip.guestId,
             trip.countries.join(", "),
             trip.startDate,
           ]
@@ -238,9 +242,9 @@ export default async function handler(req, res) {
       res.status(500).json({ error: "Failed to generate travel plan" });
     }
   } else if (req.method === "GET") {
-    const { userId } = req.query;
+    const { guestId } = req.query;
 
-    if (!userId) {
+    if (!guestId) {
       return res.status(400).json({ error: "User ID is required" });
     }
 
@@ -252,7 +256,7 @@ export default async function handler(req, res) {
          FROM travel_plans
          WHERE user_id = $1
          ORDER BY created_at DESC`,
-        [userId]
+        [guestId]
       );
 
       const travelPlans = travelPlansResult.rows;

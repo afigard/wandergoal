@@ -201,7 +201,7 @@ const countries = [
 ];
 
 export default function TravelForm() {
-  const [userId, setUserId] = useState(null);
+  const [guestId, setguestId] = useState(null);
   const router = useRouter();
   const [formData, setFormData] = useState({
     targetCountries: "",
@@ -212,14 +212,14 @@ export default function TravelForm() {
   });
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    setUserId(storedUserId);
+    const storedguestId = localStorage.getItem("guestId");
+    setguestId(storedguestId);
 
-    if (storedUserId) {
+    if (storedguestId) {
       const fetchLastPlan = async () => {
         try {
           const response = await fetch(
-            `/api/user-last-plan?userId=${storedUserId}`
+            `/api/user-last-plan?guestId=${storedguestId}`
           );
           if (response.ok) {
             const data = await response.json();
@@ -271,7 +271,7 @@ export default function TravelForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, userId }),
+        body: JSON.stringify({ ...formData, guestId }),
       });
 
       if (response.ok) {
