@@ -210,6 +210,7 @@ export default function TravelForm() {
     residence: "",
     visited: [],
   });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const storedguestId = localStorage.getItem("guestId");
@@ -243,8 +244,28 @@ export default function TravelForm() {
     }
   }, []);
 
+  const validateField = (name, value) => {
+    let error = "";
+
+    if (name === "currentAge") {
+      if (!value || value <= 0) error = "Age must be a positive number.";
+    } else if (name === "targetCountries") {
+      if (!value || value <= 0)
+        error = "Target countries must be a positive number.";
+    } else if (name === "targetAge") {
+      if (!value || value <= formData.currentAge)
+        error = "Target age must be greater than your current age.";
+    }
+
+    return error;
+  };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: error });
   };
 
   const handleResidenceChange = (value) => {
@@ -262,8 +283,27 @@ export default function TravelForm() {
     setFormData({ ...formData, visited: value });
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    newErrors.currentAge = validateField("currentAge", formData.currentAge);
+    newErrors.targetCountries = validateField(
+      "targetCountries",
+      formData.targetCountries
+    );
+    newErrors.targetAge = validateField("targetAge", formData.targetAge);
+
+    setErrors(newErrors);
+
+    return Object.values(newErrors).every((error) => !error);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      console.error("Form contains errors.");
+      return;
+    }
 
     try {
       const response = await fetch("/api/travel-plan", {
@@ -298,9 +338,14 @@ export default function TravelForm() {
           name="currentAge"
           value={formData.currentAge}
           onChange={handleChange}
-          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
+            errors.currentAge ? "border-red-500" : "border-gray-300"
+          }`}
           placeholder="Enter your current age"
         />
+        {errors.currentAge && (
+          <p className="text-red-500 text-sm">{errors.currentAge}</p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -311,9 +356,14 @@ export default function TravelForm() {
           name="targetCountries"
           value={formData.targetCountries}
           onChange={handleChange}
-          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
+            errors.targetCountries ? "border-red-500" : "border-gray-300"
+          }`}
           placeholder="Enter your target countries"
         />
+        {errors.targetCountries && (
+          <p className="text-red-500 text-sm">{errors.targetCountries}</p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -324,9 +374,14 @@ export default function TravelForm() {
           name="targetAge"
           value={formData.targetAge}
           onChange={handleChange}
-          className="block w-full p-3 border border-gray-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+          className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
+            errors.targetAge ? "border-red-500" : "border-gray-300"
+          }`}
           placeholder="Enter your target age"
         />
+        {errors.targetAge && (
+          <p className="text-red-500 text-sm">{errors.targetAge}</p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">
