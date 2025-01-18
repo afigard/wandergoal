@@ -252,6 +252,8 @@ export default function TravelForm() {
     } else if (name === "targetCountries") {
       if (!value || value <= 0)
         error = "Target countries must be a positive number.";
+      else if (value > 195)
+        error = "There are only 195 countries in the world!";
     } else if (name === "targetAge") {
       if (!value || value <= formData.currentAge)
         error = "Target age must be greater than your current age.";
