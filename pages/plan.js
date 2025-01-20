@@ -48,7 +48,7 @@ export default function Plan() {
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow max-w-4xl mx-auto px-4 py-8">
+      <main className="flex-grow w-[90%] max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-center mb-6 text-green-600">
           My Travel Plans
         </h1>
