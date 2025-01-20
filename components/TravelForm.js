@@ -188,7 +188,7 @@ const countries = [
   "Ukraine",
   "United Arab Emirates",
   "United Kingdom",
-  "United States of America",
+  "United States",
   "Uruguay",
   "Uzbekistan",
   "Vanuatu",
