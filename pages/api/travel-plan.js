@@ -217,14 +217,43 @@ export default async function handler(req, res) {
         250
       );
 
-      const trips = clusteredTrips.map((cluster, i) => ({
-        travelPlanId,
-        guestId,
-        countries: cluster.map((c) => `${c.name} ${countryToFlagEmoji(c.id)}`),
-        startDate: new Date(
-          new Date().setMonth(new Date().getMonth() + tripIntervalMonths * i)
-        ),
-      }));
+      const baseDate = new Date();
+      baseDate.setMonth(baseDate.getMonth() + 1);
+
+      // Maximum countries allowed per trip
+      const maxCountriesPerTrip = Math.max(
+        3,
+        Math.ceil(targetCountries / totalMonths) + 1
+      );
+
+      let tripMonthOffset = 0;
+
+      const trips = clusteredTrips.flatMap((cluster, clusterIndex) => {
+        const chunkedClusters = [];
+
+        // Break down large clusters into smaller chunks
+        for (let i = 0; i < cluster.length; i += maxCountriesPerTrip) {
+          chunkedClusters.push(cluster.slice(i, i + maxCountriesPerTrip));
+        }
+
+        // Create trips for each chunk
+        return chunkedClusters.map((chunk, chunkIndex) => {
+          const startDate = new Date(baseDate);
+          startDate.setMonth(startDate.getMonth() + tripMonthOffset);
+
+          // Increment offset for each trip
+          tripMonthOffset += tripIntervalMonths;
+
+          return {
+            travelPlanId,
+            guestId,
+            countries: chunk.map(
+              (c) => `${c.name} ${countryToFlagEmoji(c.id)}`
+            ),
+            startDate,
+          };
+        });
+      });
 
       // Save trips to the database
       const tripInsertPromises = trips.map((trip) =>
