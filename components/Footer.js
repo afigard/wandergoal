@@ -15,7 +15,7 @@ const Footer = () => {
           >
             <FaInstagram size={20} />
           </a>
-          <span>with ❤️</span>
+          <span>with 💚</span>
         </p>
       </div>
     </footer>
