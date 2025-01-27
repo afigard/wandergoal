@@ -211,6 +211,7 @@ export default function TravelForm() {
     visited: [],
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedguestId = localStorage.getItem("guestId");
@@ -307,6 +308,8 @@ export default function TravelForm() {
       return;
     }
 
+    setLoading(true);
+
     try {
       const response = await fetch("/api/travel-plan", {
         method: "POST",
@@ -323,6 +326,8 @@ export default function TravelForm() {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -409,9 +414,12 @@ export default function TravelForm() {
       </div>
       <button
         type="submit"
-        className="w-full bg-green-600 text-white py-3 rounded-lg font-medium text-lg hover:bg-green-700 transition"
+        className={`w-full text-white py-3 rounded-lg font-medium text-lg hover:bg-green-700 transition ${
+          loading ? "bg-green-700 cursor-not-allowed" : "bg-green-600"
+        }`}
+        disabled={loading}
       >
-        Plan My Travel
+        {loading ? "Loading..." : "Plan My Travel"}
       </button>
     </form>
   );
