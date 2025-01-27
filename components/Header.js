@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaHome, FaMapMarkedAlt } from "react-icons/fa";
 
 const Header = () => {
   return (
@@ -7,15 +8,17 @@ const Header = () => {
         <div className="flex space-x-16">
           <Link
             href="/"
-            className="text-lg sm:text-xl font-bold hover:underline"
+            className="text-lg sm:text-xl font-bold hover:underline flex items-center space-x-2"
           >
-            Home
+            <FaHome size={20} />
+            <span>Home</span>
           </Link>
           <Link
             href="/plan"
-            className="text-lg sm:text-xl font-bold hover:underline"
+            className="text-lg sm:text-xl font-bold hover:underline flex items-center space-x-2"
           >
-            Travel Plans
+            <FaMapMarkedAlt size={20} />
+            <span>Travel Plans</span>
           </Link>
         </div>
       </div>
