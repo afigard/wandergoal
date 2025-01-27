@@ -68,7 +68,7 @@ export default function Autocomplete({ options, value, onChange }) {
           ))}
       </div>
       {filteredOptions.length > 0 && (
-        <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg mt-1 w-full max-h-40 overflow-y-auto">
+        <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg mb-2 w-full max-h-40 overflow-y-auto bottom-full top-auto">
           {filteredOptions.map((option, index) => (
             <li
               key={index}
