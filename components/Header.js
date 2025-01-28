@@ -3,7 +3,7 @@ import { FaHome, FaMapMarkedAlt } from "react-icons/fa";
 
 const Header = () => {
   return (
-    <header className="bg-green-600 text-white w-full">
+    <header className="bg-green-600 text-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-center">
         <div className="flex space-x-16">
           <Link
