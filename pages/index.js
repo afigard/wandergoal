@@ -1,15 +1,54 @@
 import Header from "../components/Header";
 import TravelForm from "../components/TravelForm";
 import Footer from "../components/Footer";
+import {
+  FaPlane,
+  FaBusAlt,
+  FaUmbrellaBeach,
+  FaPassport,
+  FaGlobeAmericas,
+} from "react-icons/fa";
 
 export default function Home() {
+  const icons = [
+    FaPlane,
+    FaBusAlt,
+    FaUmbrellaBeach,
+    FaPassport,
+    FaGlobeAmericas,
+  ];
+
+  const gridSize = 6;
+  const iconGrid = Array.from({ length: gridSize * gridSize });
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="relative min-h-screen bg-gray-50 flex flex-col overflow-hidden">
+      {/* Background Grid with React Icons */}
+      <div className="absolute inset-0 grid grid-cols-4 gap-x-4 gap-y-6 sm:grid-cols-6 sm:gap-x-6 lg:gap-y-10 pointer-events-none">
+        {iconGrid.map((_, index) => {
+          const Icon = icons[index % icons.length];
+          const animationDelay = `${Math.random() * 2}s`;
+
+          return (
+            <div
+              key={index}
+              className={`flex justify-center items-center animate-float`}
+              style={{
+                animationDelay: animationDelay,
+              }}
+            >
+              <Icon className="text-4xl text-green-400 opacity-10 transform rotate-45" />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Main Content */}
       <Header />
-      <main className="container mx-auto px-4 py-8 flex flex-col items-center md:flex-row md:items-center md:justify-between flex-grow">
+      <main className="container mx-auto px-4 py-8 flex flex-col items-center md:flex-row md:items-center md:justify-between flex-grow relative z-10">
         {/* Text Section */}
         <div className="text-center md:text-left md:w-1/2 p-6">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-green-600 text-center md:text-left mb-8">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-green-600 mb-8">
             WanderGoal: Plan Your Adventures 🗺️🚕🚌🚃✈️
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 text-center md:text-left mb-6 max-w-2xl mx-auto md:mx-0">
