@@ -37,7 +37,7 @@ export default function Home() {
                 animationDelay: animationDelay,
               }}
             >
-              <Icon className="text-4xl text-green-400 opacity-10 transform rotate-45" />
+              <Icon className="text-4xl text-green-700 opacity-5 transform rotate-45" />
             </div>
           );
         })}
