@@ -11,7 +11,11 @@ export default function TravelPlan({ trips }) {
           >
             <h2 className="text-lg font-bold text-green-700">{trip.country}</h2>
             <p className="text-sm text-gray-600">
-              Start Date: {format(new Date(trip.startDate), "MMMM dd, yyyy")}
+              {format(new Date(trip.startDate), "MMMM dd")}
+              {trip.startDate.slice(0, 4) === trip.endDate.slice(0, 4)
+                ? " → "
+                : ` ${format(new Date(trip.startDate), "(yyyy)")} → `}
+              {format(new Date(trip.endDate), "MMMM dd (yyyy)")}
             </p>
           </div>
         ))

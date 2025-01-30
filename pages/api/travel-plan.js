@@ -238,8 +238,33 @@ export default async function handler(req, res) {
 
         // Create trips for each chunk
         return chunkedClusters.map((chunk, chunkIndex) => {
-          const startDate = new Date(baseDate);
-          startDate.setMonth(startDate.getMonth() + tripMonthOffset);
+          const tentativeStartDate = new Date(baseDate);
+          tentativeStartDate.setMonth(
+            tentativeStartDate.getMonth() + tripMonthOffset
+          );
+
+          // Determine trip duration based on number of countries
+          let tripDuration, targetWeekday;
+          if (chunk.length === 1) {
+            tripDuration = 2; // 1 night, 2-day trip
+            targetWeekday = 6; // Saturday
+          } else if (chunk.length === 2) {
+            tripDuration = 4;
+            targetWeekday = 5; // Friday
+          } else {
+            tripDuration = 7;
+            targetWeekday = 1; // Monday
+          }
+
+          // Adjust start date to the next occurrence of targetWeekday
+          const adjustedStartDate = new Date(tentativeStartDate);
+          while (adjustedStartDate.getDay() !== targetWeekday) {
+            adjustedStartDate.setDate(adjustedStartDate.getDate() + 1);
+          }
+
+          // Calculate end date based on trip duration
+          const endDate = new Date(adjustedStartDate);
+          endDate.setDate(adjustedStartDate.getDate() + tripDuration - 1);
 
           // Increment offset for each trip
           tripMonthOffset += tripIntervalMonths;
@@ -250,7 +275,7 @@ export default async function handler(req, res) {
             countries: chunk.map(
               (c) => `${c.name} ${countryToFlagEmoji(c.id)}`
             ),
-            startDate,
+            tripDates: { start: adjustedStartDate, end: endDate },
           };
         });
       });
@@ -258,13 +283,14 @@ export default async function handler(req, res) {
       // Save trips to the database
       const tripInsertPromises = trips.map((trip) =>
         pool.query(
-          `INSERT INTO trips (travel_plan_id, user_id, country_name, start_date)
-           VALUES ($1, $2, $3, $4)`,
+          `INSERT INTO trips (travel_plan_id, user_id, country_name, start_date, end_date)
+           VALUES ($1, $2, $3, $4, $5)`,
           [
             trip.travelPlanId,
             trip.guestId,
             trip.countries.join(", "),
-            trip.startDate,
+            trip.tripDates.start,
+            trip.tripDates.end,
           ]
         )
       );
@@ -312,7 +338,7 @@ export default async function handler(req, res) {
       const detailedPlans = await Promise.all(
         travelPlans.map(async (plan) => {
           const tripsResult = await pool.query(
-            `SELECT country_name AS country, start_date AS "startDate"
+            `SELECT country_name AS country, start_date AS "startDate", end_date AS "endDate"
              FROM trips
              WHERE travel_plan_id = $1
              ORDER BY start_date ASC`,
