@@ -46,6 +46,8 @@ export default function Plan() {
   const [travelPlans, setTravelPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [planToDelete, setPlanToDelete] = useState(null);
 
   useEffect(() => {
     const guestId = localStorage.getItem("guestId");
@@ -83,6 +85,27 @@ export default function Plan() {
     fetchTravelPlans();
   }, []);
 
+  const deleteTravelPlan = async () => {
+    if (!planToDelete) return;
+
+    try {
+      const response = await fetch(`/api/travel-plan/?planId=${planToDelete}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete travel plan.");
+      }
+
+      setTravelPlans(travelPlans.filter((plan) => plan.id !== planToDelete));
+    } catch (error) {
+      console.error("Error deleting travel plan:", error);
+    } finally {
+      setShowModal(false);
+      setPlanToDelete(null);
+    }
+  };
+
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col">
       <Header />
@@ -113,28 +136,27 @@ export default function Plan() {
                   </p>
                 </div>
 
-                {/* Download button */}
-                <button
-                  className="text-green-700 p-2 rounded-full shadow flex items-center justify-center hover:text-green-800"
-                  title="Download"
-                  onClick={() => downloadTXT(plan)}
-                >
-                  {/* Download arrow icon */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
+                {/* Buttons */}
+                <div className="flex gap-2">
+                  <button
+                    className="text-green-700 p-2 rounded-full shadow flex items-center justify-center hover:text-green-800"
+                    title="Download"
+                    onClick={() => downloadTXT(plan)}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 3v12m0 0l-4-4m4 4l4-4M4.5 19.5h15"
-                    />
-                  </svg>
-                </button>
+                    📥
+                  </button>
+
+                  <button
+                    className="text-red-600 p-2 rounded-full shadow flex items-center justify-center hover:text-red-800"
+                    title="Delete"
+                    onClick={() => {
+                      setShowModal(true);
+                      setPlanToDelete(plan.id);
+                    }}
+                  >
+                    ❌
+                  </button>
+                </div>
               </div>
 
               {/* Details Section */}
@@ -182,6 +204,32 @@ export default function Plan() {
         )}
       </main>
       <Footer />
+
+      {/* Delete Confirmation Modal */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg w-[90%] max-w-xs sm:max-w-sm text-center">
+            <h2 className="text-xl font-semibold text-red-600">
+              Delete Travel Plan?
+            </h2>
+            <p className="text-gray-700 mt-2">This action cannot be undone.</p>
+            <div className="mt-4 flex justify-center gap-4">
+              <button
+                className="bg-gray-300 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-400"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-600 px-4 py-2 rounded-lg text-white hover:bg-red-700"
+                onClick={deleteTravelPlan}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

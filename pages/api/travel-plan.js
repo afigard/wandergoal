@@ -365,8 +365,33 @@ export default async function handler(req, res) {
       console.error("Error fetching travel plans:", error);
       res.status(500).json({ error: "Failed to fetch travel plans" });
     }
+  } else if (req.method === "DELETE") {
+    const { planId } = req.query;
+
+    if (!planId) {
+      return res.status(400).json({ error: "Plan ID is required" });
+    }
+
+    try {
+      // Delete associated trips first (to maintain referential integrity)
+      await pool.query("DELETE FROM trips WHERE travel_plan_id = $1", [planId]);
+
+      // Delete visited countries associated with the travel plan
+      await pool.query(
+        "DELETE FROM visited_countries WHERE travel_plan_id = $1",
+        [planId]
+      );
+
+      // Delete the travel plan itself
+      await pool.query("DELETE FROM travel_plans WHERE id = $1", [planId]);
+
+      res.status(200).json({ message: "Travel plan deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting travel plan:", error);
+      res.status(500).json({ error: "Failed to delete travel plan" });
+    }
   } else {
-    res.setHeader("Allow", ["POST", "GET"]);
+    res.setHeader("Allow", ["POST", "GET", "DELETE"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
