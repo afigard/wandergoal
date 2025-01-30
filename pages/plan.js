@@ -28,6 +28,9 @@ function downloadTXT(plan) {
     )}, End Date: ${format(new Date(trip.endDate), "yyyy-MM-dd")}\n`;
   });
 
+  // Add a friendly closing note with a trademark
+  txtContent += `\n---\nBrought to you by WanderGoal™ 💚 Explore the world your way!\n`;
+
   // Convert to Blob and trigger download
   const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
