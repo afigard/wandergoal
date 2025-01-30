@@ -25,7 +25,7 @@ function downloadTXT(plan) {
     txtContent += `${trip.country}, Start Date: ${format(
       new Date(trip.startDate),
       "yyyy-MM-dd"
-    )}\n`;
+    )}, End Date: ${format(new Date(trip.endDate), "yyyy-MM-dd")}\n`;
   });
 
   // Convert to Blob and trigger download
