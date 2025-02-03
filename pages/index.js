@@ -22,7 +22,7 @@ export default function Home() {
   const iconGrid = Array.from({ length: gridSize * gridSize });
 
   return (
-    <div className="relative min-h-screen bg-gray-50 flex flex-col overflow-hidden">
+    <div className="relative min-h-screen bg-gray-50 flex flex-col">
       {/* Background Grid with React Icons */}
       <div className="absolute inset-0 grid grid-cols-4 gap-x-4 gap-y-6 sm:grid-cols-6 sm:gap-x-6 lg:gap-y-10 pointer-events-none">
         {iconGrid.map((_, index) => {
