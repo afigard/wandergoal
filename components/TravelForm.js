@@ -320,7 +320,7 @@ export default function TravelForm() {
       });
 
       if (response.ok) {
-        router.push("/plan");
+        router.push("/plans");
       } else {
         console.error("Error saving travel plan:", await response.json());
       }

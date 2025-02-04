@@ -14,7 +14,7 @@ const Header = () => {
             <span>Home</span>
           </Link>
           <Link
-            href="/plan"
+            href="/plans"
             className="text-lg sm:text-xl font-bold hover:underline flex items-center space-x-2"
           >
             <FaMapMarkedAlt size={20} />
