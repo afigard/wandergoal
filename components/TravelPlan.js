@@ -1,3 +1,4 @@
+import { useState } from "react";
 import experiencesData from "../data/experiencesData";
 import { format } from "date-fns";
 
@@ -16,6 +17,9 @@ export default function TravelPlan({ trips }) {
             (cleanCountry) => experiencesData[cleanCountry] || []
           );
 
+          // Local state for collapsible experiences
+          const [expanded, setExpanded] = useState(false);
+
           return (
             <div
               key={index}
@@ -32,21 +36,35 @@ export default function TravelPlan({ trips }) {
                 {format(new Date(trip.endDate), "MMMM dd (yyyy)")}
               </p>
 
-              {/* Recommended Experiences Section */}
-              <h3 className="text-lg font-medium text-green-600 mt-2">
-                {experiences.length === 1
-                  ? "Recommended Experience"
-                  : "Recommended Experiences"}
-                :
-              </h3>
-              {experiences.length > 0 ? (
-                <ul className="text-gray-700">
-                  {experiences.map((experience, idx) => (
-                    <li key={idx}>{experience}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-500">No recommendations available.</p>
+              {/* Recommended Experiences Section with Toggle */}
+              {experiences.length > 0 && (
+                <div className="mt-2">
+                  <button
+                    onClick={() => setExpanded(!expanded)}
+                    className="flex items-center text-green-600 font-medium hover:text-green-800 focus:outline-none"
+                  >
+                    <svg
+                      className={`mr-1 w-3 h-3 transform transition-transform ${
+                        expanded ? "rotate-90" : ""
+                      }`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <polygon points="5,3 15,10 5,17" />
+                    </svg>
+                    {experiences.length === 1
+                      ? "Recommended Experience"
+                      : "Recommended Experiences"}
+                  </button>
+
+                  {expanded && (
+                    <ul className="mt-2 text-gray-700">
+                      {experiences.map((experience, idx) => (
+                        <li key={idx}>{experience}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               )}
             </div>
           );
