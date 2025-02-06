@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import TravelPlan from "../components/TravelPlan";
 import Footer from "../components/Footer";
+import experiencesData from "../data/experiencesData";
 import { format } from "date-fns";
 
 function downloadTXT(plan) {
@@ -22,10 +23,36 @@ function downloadTXT(plan) {
   // Add recommended trips
   txtContent += `Recommended Trips:\n`;
   plan.trips.forEach((trip) => {
-    txtContent += `${trip.country}, Start Date: ${format(
+    txtContent += `\n📍 ${trip.country}\n`;
+    txtContent += `   - Start Date: ${format(
       new Date(trip.startDate),
       "yyyy-MM-dd"
-    )}, End Date: ${format(new Date(trip.endDate), "yyyy-MM-dd")}\n`;
+    )}\n`;
+    txtContent += `   - End Date: ${format(
+      new Date(trip.endDate),
+      "yyyy-MM-dd"
+    )}\n`;
+
+    // Extract individual country names
+    const countryNames = trip.country
+      .split(",")
+      .map((c) => c.trim().replace(/\s[^\p{L}]+/gu, ""));
+
+    // Gather experiences for all countries
+    const experiences = countryNames.flatMap(
+      (cleanCountry) => experiencesData[cleanCountry] || []
+    );
+
+    if (experiences.length > 0) {
+      txtContent += `   - Recommended Experience${
+        experiences.length > 1 ? "s" : ""
+      }:\n`;
+      experiences.forEach((exp) => {
+        txtContent += `     ${exp}\n`;
+      });
+    } else {
+      txtContent += `   - Recommended Experience: No recommendations available.\n`;
+    }
   });
 
   // Add a friendly closing note with a trademark
