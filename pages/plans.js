@@ -133,6 +133,15 @@ export default function Plan() {
     }
   };
 
+  const [expandedCountries, setExpandedCountries] = useState({});
+
+  const toggleVisitedCountries = (planId) => {
+    setExpandedCountries((prev) => ({
+      ...prev,
+      [planId]: !prev[planId],
+    }));
+  };
+
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col">
       <Header />
@@ -198,17 +207,37 @@ export default function Plan() {
                   {plan.target_age - plan.current_age === 1 ? "year" : "years"}
                 </p>
                 <p className="text-gray-700">Residence: {plan.residence}</p>
+
+                {/* Visited Countries Toggle */}
                 <div>
-                  <p className="text-gray-700">Visited Countries:</p>
-                  <ul className="list-disc list-inside text-gray-700">
-                    {plan.visitedCountries.length > 0 ? (
-                      plan.visitedCountries.map((country, idx) => (
-                        <li key={idx}>{country}</li>
-                      ))
-                    ) : (
-                      <li>No countries visited yet.</li>
-                    )}
-                  </ul>
+                  <button
+                    onClick={() => toggleVisitedCountries(plan.id)}
+                    className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
+                  >
+                    <svg
+                      className={`mr-1 w-3 h-3 transform transition-transform ${
+                        expandedCountries[plan.id] ? "rotate-90" : ""
+                      }`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <polygon points="5,3 15,10 5,17" />
+                    </svg>
+                    Visited Countries ({plan.visitedCountries.length}/195)
+                  </button>
+
+                  {/* Show countries only if expanded */}
+                  {expandedCountries[plan.id] && (
+                    <ul className="list-disc list-inside text-gray-700">
+                      {plan.visitedCountries.length > 0 ? (
+                        plan.visitedCountries.map((country, idx) => (
+                          <li key={idx}>{country}</li>
+                        ))
+                      ) : (
+                        <li>No countries visited yet.</li>
+                      )}
+                    </ul>
+                  )}
                 </div>
 
                 {/* Recommended Trips Section */}
