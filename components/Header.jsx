@@ -58,6 +58,7 @@ const Header = () => {
               <FaHome size={20} />
               <span>Home</span>
             </Link>
+            <div className="h-px bg-green-600" />
             <Link
               href="/plans"
               className="hover:underline flex items-center space-x-2"
