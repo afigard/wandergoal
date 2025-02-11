@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import TravelForm from "../components/TravelForm";
 import Footer from "../components/Footer";
+import { useRef } from "react";
 import {
   FaPlane,
   FaBusAlt,
@@ -10,6 +11,8 @@ import {
 } from "react-icons/fa";
 
 export default function Home() {
+  const formRef = useRef(null);
+
   const icons = [
     FaPlane,
     FaBusAlt,
@@ -48,18 +51,28 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8 flex flex-col items-center md:flex-row md:items-center md:justify-between flex-grow relative z-10">
         {/* Text Section */}
         <div className="text-center md:text-left md:w-1/2 p-6">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-green-600 mb-8">
-            WanderGoal: Plan Your Adventures 🗺️🚕🚌🚃✈️
+          <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-green-600 via-green-500 to-green-600 text-transparent bg-clip-text mb-4">
+            Where To Next? Let’s Find Out!
           </h1>
-          <p className="text-lg sm:text-xl text-gray-700 text-center md:text-left mb-6 max-w-2xl mx-auto md:mx-0">
-            Your personalized travel planner to help you achieve your adventure
-            goals. Set your targets, plan your trips, and make every journey
-            memorable!
+          <h1 className="text-5xl sm:text-6xl font-extrabold mb-6">🗺️✈️</h1>
+          <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto md:mx-0">
+            Your personalized travel planner to help you achieve your travel
+            goals.
           </p>
+
+          {/* CTA Button */}
+          <a
+            onClick={() => {
+              formRef.current?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="inline-block bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-6 rounded-lg shadow-lg transition md:hidden mb-6"
+          >
+            Start Planning
+          </a>
         </div>
 
         {/* Form Section */}
-        <div className="w-full md:w-1/2">
+        <div ref={formRef} className="w-full md:w-1/2">
           <TravelForm />
         </div>
       </main>

@@ -415,11 +415,13 @@ export default function TravelForm() {
       <button
         type="submit"
         className={`w-full text-white py-3 rounded-lg font-medium text-lg hover:bg-green-700 transition ${
-          loading ? "bg-green-700 cursor-not-allowed" : "bg-green-600"
+          loading
+            ? "bg-green-700 cursor-not-allowed"
+            : "bg-gradient-to-r from-green-400 via-green-500 to-green-400"
         }`}
         disabled={loading}
       >
-        {loading ? "Loading..." : "Plan My Travel"}
+        {loading ? "Loading..." : "🌍 Explore Now 🏃‍♂️"}
       </button>
     </form>
   );
