@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Autocomplete({ options, value, onChange }) {
+export default function Autocomplete({ options, value, onChange, error }) {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [query, setQuery] = useState(value || "");
 
@@ -46,15 +46,17 @@ export default function Autocomplete({ options, value, onChange }) {
         type="text"
         value={query}
         onChange={handleInputChange}
-        className="w-full p-3 border border-gray-300 rounded-lg text-lg"
+        className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
+          error ? "border-red-500" : "border-gray-300"
+        }`}
         placeholder="Type a country..."
       />
-      <div className="flex flex-wrap mt-2">
+      <div className="flex flex-wrap">
         {Array.isArray(value) &&
           value.map((selectedCountry, index) => (
             <div
               key={index}
-              className="flex items-center bg-gray-200 text-gray-800 py-1 px-2 mr-2 rounded-lg"
+              className="flex items-center bg-gray-200 text-gray-800 py-1 px-2 mr-2 rounded-lg mt-2"
             >
               {selectedCountry}
               <button

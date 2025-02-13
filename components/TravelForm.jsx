@@ -295,8 +295,15 @@ export default function TravelForm() {
     );
     newErrors.targetAge = validateField("targetAge", formData.targetAge);
 
-    setErrors(newErrors);
+    if (!formData.residence || formData.residence.trim() === "") {
+      newErrors.residence = "Residence is required.";
+    }
 
+    if (!formData.visited || formData.visited.length === 0) {
+      newErrors.visited = "Visited countries are required.";
+    }
+
+    setErrors(newErrors);
     return Object.values(newErrors).every((error) => !error);
   };
 
@@ -398,8 +405,11 @@ export default function TravelForm() {
           options={countries}
           value={formData.residence}
           onChange={handleResidenceChange}
-          className="mt-1"
+          error={errors.residence}
         />
+        {errors.residence && (
+          <p className="text-red-500 text-sm">{errors.residence}</p>
+        )}
       </div>
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">
@@ -409,8 +419,11 @@ export default function TravelForm() {
           options={countries}
           value={formData.visited}
           onChange={handleVisitedChange}
-          className="mt-1"
+          error={errors.visited}
         />
+        {errors.visited && (
+          <p className="text-red-500 text-sm">{errors.visited}</p>
+        )}
       </div>
       <button
         type="submit"
