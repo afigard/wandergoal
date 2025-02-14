@@ -28,7 +28,7 @@ export default function TravelPlan({ trips }) {
               <h2 className="text-lg font-bold text-green-700">
                 {trip.country}
               </h2>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-500">
                 {format(new Date(trip.startDate), "MMMM dd")}
                 {trip.startDate.slice(0, 4) === trip.endDate.slice(0, 4)
                   ? " → "
@@ -41,7 +41,7 @@ export default function TravelPlan({ trips }) {
                 <div className="mt-2">
                   <button
                     onClick={() => setExpanded(!expanded)}
-                    className="flex items-center text-green-600 font-medium hover:text-green-800 focus:outline-none"
+                    className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
                   >
                     <svg
                       className={`mr-1 w-3 h-3 transform transition-transform ${
