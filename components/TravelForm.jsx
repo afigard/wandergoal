@@ -434,7 +434,7 @@ export default function TravelForm() {
         }`}
         disabled={loading}
       >
-        {loading ? "Loading..." : "🌍 Explore Now 🏃‍♂️"}
+        {loading ? "Loading..." : "Build My Plan"}
       </button>
     </form>
   );

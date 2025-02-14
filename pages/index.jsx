@@ -56,9 +56,9 @@ export default function Home() {
           </h1>
           <h1 className="text-5xl sm:text-6xl font-extrabold mb-6">🗺️✈️</h1>
           <p className="text-lg sm:text-xl text-gray-700 text-center md:text-left mb-8 max-w-2xl mx-auto md:mx-0">
-            Your personalized travel planner to help you achieve your adventure
-            goals. Set your targets, plan your trips, and make every journey
-            memorable!
+            Your free personalized travel planner to help you achieve your
+            adventure goals. Set your targets, plan your trips, and make every
+            journey memorable!
           </p>
 
           {/* CTA Button */}
