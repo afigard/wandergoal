@@ -21,9 +21,17 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        wiggle: {
+          "0%, 96%": { transform: "rotate(0deg)" },
+          "97%": { transform: "rotate(2deg)" },
+          "98%": { transform: "rotate(-2deg)" },
+          "99%": { transform: "rotate(2deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
       },
       animation: {
         float: "float 4s ease-in-out infinite",
+        wiggle: "wiggle 7s ease-in-out infinite",
       },
       opacity: {
         15: "0.15",

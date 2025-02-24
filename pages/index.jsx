@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import TravelForm from "../components/TravelForm";
 import Footer from "../components/Footer";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   FaPlane,
   FaBusAlt,
@@ -12,6 +12,7 @@ import {
 
 export default function Home() {
   const formRef = useRef(null);
+  const [isWiggling, setIsWiggling] = useState(true);
 
   const icons = [
     FaPlane,
@@ -64,9 +65,12 @@ export default function Home() {
           {/* CTA Button */}
           <a
             onClick={() => {
+              setIsWiggling(false);
               formRef.current?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="inline-block bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-6 rounded-lg shadow-lg transition md:hidden mb-6"
+            className={`inline-block bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-6 rounded-lg shadow-lg transition md:hidden mb-6 ${
+              isWiggling ? "animate-wiggle" : ""
+            }`}
           >
             Start Planning
           </a>
