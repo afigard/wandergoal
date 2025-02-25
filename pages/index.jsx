@@ -36,10 +36,8 @@ export default function Home() {
           return (
             <div
               key={index}
-              className={`flex justify-center items-center animate-float`}
-              style={{
-                animationDelay: animationDelay,
-              }}
+              className="flex justify-center items-center animate-float"
+              style={{ animationDelay }}
             >
               <Icon className="text-4xl text-green-700 opacity-5 transform rotate-45" />
             </div>
@@ -52,17 +50,15 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8 flex flex-col items-center md:flex-row md:items-center md:justify-between flex-grow relative z-10">
         {/* Text Section */}
         <div className="text-center md:text-left md:w-1/2 p-6">
-          <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-green-600 via-green-500 to-green-600 text-transparent bg-clip-text mb-4">
-            Where To Next? Let’s Find Out!
+          <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-green-600 via-green-500 to-green-600 text-transparent bg-clip-text mb-6">
+            Plan Your Dream Adventure!
           </h1>
-          <h1 className="text-5xl sm:text-6xl font-extrabold mb-6">🗺️✈️</h1>
-          <p className="text-lg sm:text-xl text-gray-700 text-center md:text-left mb-8 max-w-2xl mx-auto md:mx-0">
-            Your free personalized travel planner to help you achieve your
-            adventure goals. Set your targets, plan your trips, and make every
-            journey memorable!
+          <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto md:mx-0">
+            Join hundreds of travelers and create your personalized travel plan
+            in minutes.
           </p>
 
-          {/* CTA Button */}
+          {/* CTA Button (mobile-only) */}
           <a
             onClick={() => {
               setIsWiggling(false);
@@ -72,7 +68,7 @@ export default function Home() {
               isWiggling ? "animate-wiggle" : ""
             }`}
           >
-            Start Planning
+            🏃‍♂️ Take Me There!
           </a>
         </div>
 
