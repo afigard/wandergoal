@@ -27,5 +27,7 @@ const excludedCountriesData = [
   "Syria",
   "Ukraine",
   "Venezuela",
-  "Yemen",
+  "Yemen"
 ];
+
+export default excludedCountriesData;

@@ -193,5 +193,7 @@ const countriesData = [
   "Viet Nam",
   "Yemen",
   "Zambia",
-  "Zimbabwe",
+  "Zimbabwe"
 ];
+
+export default countriesData;
