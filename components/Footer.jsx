@@ -7,9 +7,7 @@ const Footer = () => {
         <p className="text-sm flex items-center">
           © {new Date().getFullYear()} WanderGoal.
         </p>
-        <p className="text-sm flex items-center">
-          All rights reserved.
-        </p>
+        <p className="text-sm flex items-center">All rights reserved.</p>
       </div>
     </footer>
   );
