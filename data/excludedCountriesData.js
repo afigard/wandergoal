@@ -1,4 +1,4 @@
-const excludedCountries = [
+const excludedCountriesData = [
   "Afghanistan",
   "Azerbaijan",
   "Bangladesh",

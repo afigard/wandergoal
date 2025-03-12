@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Autocomplete from "./Autocomplete";
-import countries from "../data/countries";
+import countriesData from "../data/countriesData";
 
-const countries = countries;
+const countries = countriesData;
 
 export default function TravelForm() {
   const [guestId, setguestId] = useState(null);
