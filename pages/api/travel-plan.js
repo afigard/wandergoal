@@ -1,6 +1,7 @@
 const pool = require("../../lib/db");
 const { handleGuestUser } = require("../../lib/guestUser");
 const { kmeans } = require("ml-kmeans");
+import excludedCountries from "../../data/excludedCountries";
 
 // Helper function: Haversine formula to calculate distance
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -74,37 +75,7 @@ export default async function handler(req, res) {
       }
 
       // List of countries to exclude
-      const excludedCountries = [
-        "Afghanistan",
-        "Azerbaijan",
-        "Bangladesh",
-        "Belarus",
-        "Burkina Faso",
-        "Central African Republic",
-        "Chad",
-        "Congo (Kinshasa)",
-        "Haiti",
-        "Honduras",
-        "Iran",
-        "Iraq",
-        "Israel",
-        "Lebanon",
-        "Libya",
-        "Mali",
-        "Myanmar",
-        "Niger",
-        "North Korea",
-        "Pakistan",
-        "Palestine",
-        "Russia",
-        "Somalia",
-        "South Sudan",
-        "Sudan",
-        "Syria",
-        "Ukraine",
-        "Venezuela",
-        "Yemen",
-      ];
+      const excludedCountries = excludedCountries;
 
       const unvisitedResult = await pool.query(
         `SELECT id, name, latitude, longitude
