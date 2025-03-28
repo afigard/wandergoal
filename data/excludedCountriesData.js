@@ -8,7 +8,6 @@ const excludedCountriesData = [
   "Chad",
   "Congo (Kinshasa)",
   "Haiti",
-  "Honduras",
   "Iran",
   "Iraq",
   "Israel",
