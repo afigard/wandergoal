@@ -11,7 +11,7 @@ import {
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <header className="bg-green-600 text-white shadow-md sticky top-0 z-50">
+    <header className="bg-green-600 text-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <FaPassport size={24} />
