@@ -51,7 +51,7 @@ export default function Home() {
         {/* Text Section */}
         <div className="text-center md:text-left md:w-1/2 p-6">
           <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-green-600 via-green-500 to-green-600 text-transparent bg-clip-text mb-6">
-            Plan Your Dream Adventure!
+            Reach Your Travel Goals!
           </h1>
           <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto md:mx-0">
             Join hundreds of travelers and create your personalized travel plan
