@@ -62,7 +62,10 @@ export default function Home() {
           <a
             onClick={() => {
               setIsWiggling(false);
-              formRef.current?.scrollIntoView({ behavior: "smooth" });
+              window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+              });
             }}
             className={`inline-block bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-6 rounded-lg shadow-lg transition md:hidden mb-6 ${
               isWiggling ? "animate-wiggle" : ""
