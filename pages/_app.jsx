@@ -16,6 +16,11 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>WanderGoal - Your Personalized Travel Planner</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="theme-color" content="#4CAF50" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
       </Head>
       <Component {...pageProps} />
     </>
