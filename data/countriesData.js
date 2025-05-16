@@ -40,7 +40,7 @@ const countriesData = [
   "Congo (Brazzaville)",
   "Congo (Kinshasa)",
   "Costa Rica",
-  "Ivory Coast",
+  "Côte d'Ivoire",
   "Croatia",
   "Cuba",
   "Cyprus",

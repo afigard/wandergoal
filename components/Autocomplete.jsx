@@ -1,4 +1,16 @@
 import { useState, useEffect } from "react";
+import countriesDataWithFlags from "../data/countriesDataWithFlags";
+
+function getFlagEmoji(countryName) {
+  const countryCodes = countriesDataWithFlags;
+
+  const code = countryCodes[countryName];
+  if (!code) return "";
+
+  return code
+    .toUpperCase()
+    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
+}
 
 export default function Autocomplete({ options, value, onChange, error }) {
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -58,6 +70,7 @@ export default function Autocomplete({ options, value, onChange, error }) {
               key={index}
               className="flex items-center bg-gray-200 text-gray-800 py-1 px-2 mr-2 rounded-lg mt-2"
             >
+              <span className="mr-1">{getFlagEmoji(selectedCountry)}</span>
               {selectedCountry}
               <button
                 type="button"
@@ -75,8 +88,9 @@ export default function Autocomplete({ options, value, onChange, error }) {
             <li
               key={index}
               onClick={() => handleOptionClick(option)}
-              className="p-2 hover:bg-gray-200 cursor-pointer"
+              className="p-2 hover:bg-gray-200 cursor-pointer flex items-center"
             >
+              <span className="mr-2">{getFlagEmoji(option)}</span>
               {option}
             </li>
           ))}

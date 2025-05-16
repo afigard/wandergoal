@@ -40,7 +40,7 @@ const experiencesData = {
   "Congo (Brazzaville)": ["🌿 Discover Odzala-Kokoua National Park"],
   "Congo (Kinshasa)": ["🌊 Visit Zongo Falls"],
   "Costa Rica": ["🌋 Hike around Arenal Volcano"],
-  "Ivory Coast": ["🏰 Explore the Basilica of Yamoussoukro"],
+  "Côte d'Ivoire": ["🏰 Explore the Basilica of Yamoussoukro"],
   Croatia: ["🏝️ Swim in the Plitvice Lakes"],
   Cuba: ["🚗 Ride a classic car in Havana"],
   Cyprus: ["🏖️ Relax at Nissi Beach"],
