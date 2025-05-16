@@ -66,6 +66,15 @@ export default function Home() {
                 top: document.body.scrollHeight,
                 behavior: "smooth",
               });
+              // Focus the first input inside the form
+              if (formRef.current) {
+                const firstInput = formRef.current.querySelector(
+                  "input, select, textarea"
+                );
+                if (firstInput) {
+                  firstInput.focus();
+                }
+              }
             }}
             className={`inline-block bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-6 rounded-lg shadow-lg transition md:hidden mb-6 ${
               isWiggling ? "animate-wiggle" : ""
