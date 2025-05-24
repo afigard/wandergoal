@@ -1,4 +1,4 @@
-const countriesData = [
+[
   "Afghanistan",
   "Albania",
   "Algeria",
@@ -194,6 +194,4 @@ const countriesData = [
   "Yemen",
   "Zambia",
   "Zimbabwe"
-];
-
-export default countriesData;
+]

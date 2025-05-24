@@ -1,7 +1,7 @@
 const pool = require("../../lib/db");
 const { handleGuestUser } = require("../../lib/utils/guestUser");
 const { kmeans } = require("ml-kmeans");
-import excludedCountriesData from "../../lib/constants/excludedCountriesData";
+import excludedCountries from "../../lib/constants/excludedCountries.json";
 
 // Helper function: Haversine formula to calculate distance
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -73,9 +73,6 @@ export default async function handler(req, res) {
           .status(400)
           .json({ error: "No more countries to plan trips for." });
       }
-
-      // List of countries to exclude
-      const excludedCountries = excludedCountriesData;
 
       const unvisitedResult = await pool.query(
         `SELECT id, name, latitude, longitude

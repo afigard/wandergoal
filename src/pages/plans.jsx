@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/layout/Header";
 import TravelPlan from "../components/travel/TravelPlan";
 import Footer from "../components/layout/Footer";
-import experiencesData from "../lib/constants/experiencesData";
+import experiencesData from "../lib/constants/experiences.json";
 import { format } from "date-fns";
 
 function downloadTXT(plan) {

@@ -1,4 +1,4 @@
-const excludedCountriesData = [
+[
   "Afghanistan",
   "Azerbaijan",
   "Bangladesh",
@@ -27,6 +27,4 @@ const excludedCountriesData = [
   "Ukraine",
   "Venezuela",
   "Yemen"
-];
-
-export default excludedCountriesData;
+]

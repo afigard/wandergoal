@@ -1,5 +1,5 @@
 import { useState } from "react";
-import experiencesData from "../../lib/constants/experiencesData";
+import experiencesData from "../../lib/constants/experiences.json";
 import { format } from "date-fns";
 
 export default function TravelPlan({ trips }) {
