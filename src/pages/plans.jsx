@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import TravelPlan from "../components/TravelPlan";
-import Footer from "../components/Footer";
-import experiencesData from "../data/experiencesData";
+import Header from "../components/layout/Header";
+import TravelPlan from "../components/travel/TravelPlan";
+import Footer from "../components/layout/Footer";
+import experiencesData from "../lib/constants/experiencesData";
 import { format } from "date-fns";
 
 function downloadTXT(plan) {

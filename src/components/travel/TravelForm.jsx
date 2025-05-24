@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Autocomplete from "./Autocomplete";
-import countriesData from "../data/countriesData";
+import Autocomplete from "../common/Autocomplete";
+import countriesData from "../../lib/constants/countriesData";
 
 const countries = countriesData;
 

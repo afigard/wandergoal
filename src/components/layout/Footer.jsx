@@ -1,5 +1,3 @@
-import { FaInstagram } from "react-icons/fa";
-
 const Footer = () => {
   return (
     <footer className="bg-green-600 text-white">

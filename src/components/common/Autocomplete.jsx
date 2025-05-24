@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import countriesDataWithFlags from "../data/countriesDataWithFlags";
+import countriesDataWithFlags from "../../lib/constants/countriesDataWithFlags";
 
 function getFlagEmoji(countryName) {
   const countryCodes = countriesDataWithFlags;

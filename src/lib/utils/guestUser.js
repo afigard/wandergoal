@@ -1,4 +1,4 @@
-import db from "./db";
+import db from "../db";
 
 export async function handleGuestUser(guestId) {
   const placeholderEmail = `guest-${guestId}@placeholder.com`;

@@ -11,5 +11,5 @@ WanderGoal is a travel planning web application designed to help users set, trac
 
 ### **Snapshots** 📷
 
-![Desktop preview](public/wandergoal-snapshot-1.png)
-![Mobile preview](public/wandergoal-snapshot-2.png)
+![Desktop preview](public/images/desktop-snapshot.png)
+![Mobile preview](public/images/mobile-snapshot.png)

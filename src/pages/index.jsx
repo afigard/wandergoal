@@ -1,6 +1,6 @@
-import Header from "../components/Header";
-import TravelForm from "../components/TravelForm";
-import Footer from "../components/Footer";
+import Header from "../components/layout/Header";
+import TravelForm from "../components/travel/TravelForm";
+import Footer from "../components/layout/Footer";
 import { useRef, useState } from "react";
 import {
   FaPlane,

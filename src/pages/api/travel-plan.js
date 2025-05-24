@@ -1,7 +1,7 @@
 const pool = require("../../lib/db");
-const { handleGuestUser } = require("../../lib/guestUser");
+const { handleGuestUser } = require("../../lib/utils/guestUser");
 const { kmeans } = require("ml-kmeans");
-import excludedCountriesData from "../../data/excludedCountriesData";
+import excludedCountriesData from "../../lib/constants/excludedCountriesData";
 
 // Helper function: Haversine formula to calculate distance
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
