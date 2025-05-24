@@ -80,7 +80,7 @@ export default function Home() {
               isWiggling ? "animate-wiggle" : ""
             }`}
           >
-            Start the Journey
+            Get Started
           </a>
         </div>
 

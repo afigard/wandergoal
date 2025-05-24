@@ -239,7 +239,7 @@ export default function TravelForm() {
         }`}
         disabled={loading}
       >
-        {loading ? "Please wait..." : "Build My Plan"}
+        {loading ? "Please Wait..." : "Craft My Itinerary"}
       </button>
     </form>
   );
