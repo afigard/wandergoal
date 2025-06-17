@@ -53,7 +53,7 @@ export default function Home() {
           <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-green-500 via-green-400 to-green-500 text-transparent bg-clip-text mb-6">
             Where To Next?
           </h1>
-          <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto md:mx-0">
+          <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto md:mx-0">
             Dream it. Plan it. Go. <br /> Turn wild travel ideas into real
             adventures.
           </p>
