@@ -144,7 +144,7 @@ export default function TravelForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg space-y-6"
+      className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg space-y-6 border-green-600 border-2"
     >
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">

@@ -50,7 +50,7 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8 flex flex-col items-center md:flex-row md:items-center md:justify-between flex-grow relative z-10">
         {/* Text Section */}
         <div className="text-center md:text-left md:w-1/2 p-6">
-          <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-green-600 via-green-500 to-green-600 text-transparent bg-clip-text mb-6">
+          <h1 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-green-500 via-green-400 to-green-500 text-transparent bg-clip-text mb-6">
             Where To Next?
           </h1>
           <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto md:mx-0">
@@ -76,7 +76,7 @@ export default function Home() {
                 }
               }
             }}
-            className={`inline-block bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-6 rounded-lg shadow-lg transition md:hidden mb-6 ${
+            className={`inline-block bg-green-600 hover:bg-green-700 text-white text-lg font-medium py-3 px-5 rounded-lg shadow-lg transition md:hidden mb-6 ${
               isWiggling ? "animate-wiggle" : ""
             }`}
           >
