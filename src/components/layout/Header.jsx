@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  FaPassport,
   FaHome,
   FaMapMarkedAlt,
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+import { FiTarget } from "react-icons/fi";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ const Header = () => {
     <header className="bg-green-600 text-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <FaPassport size={24} />
+          <FiTarget size={24} />
           <span className="text-xl font-bold">WanderGoal</span>
         </div>
 
