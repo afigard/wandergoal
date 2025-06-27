@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Geist", "system-ui", "sans-serif"],
+      },
       colors: {
         green: {
           600: "#4CAF50",

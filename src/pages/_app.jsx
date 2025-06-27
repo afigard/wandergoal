@@ -1,5 +1,8 @@
 import "../styles/global.css";
 import Head from "next/head";
+import { Geist } from "next/font/google";
+
+const geist = Geist({ subsets: ["latin"] });
 
 if (typeof window !== "undefined") {
   const existingGuestId = localStorage.getItem("guestId");
@@ -12,7 +15,7 @@ if (typeof window !== "undefined") {
 
 export default function App({ Component, pageProps }) {
   return (
-    <>
+    <main className={geist.className}>
       <Head>
         <title>WanderGoal – Your Personalized Travel Planner</title>
         <meta
@@ -34,6 +37,6 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
       <Component {...pageProps} />
-    </>
+    </main>
   );
 }
