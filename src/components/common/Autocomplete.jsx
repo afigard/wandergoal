@@ -56,8 +56,10 @@ export default function Autocomplete({ options, value, onChange, error }) {
         type="text"
         value={query}
         onChange={handleInputChange}
-        className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
-          error ? "border-red-500" : "border-gray-300"
+        className={`block w-full p-3 border rounded-lg text-base focus:outline-none dark:text-white dark:bg-black dark:border-neutral-700 ${
+          error
+            ? "border-red-500"
+            : "border-neutral-300 dark:border-neutral-700"
         }`}
         placeholder="Type a country..."
       />
@@ -66,7 +68,7 @@ export default function Autocomplete({ options, value, onChange, error }) {
           value.map((selectedCountry, index) => (
             <div
               key={index}
-              className="flex items-center bg-gray-200 text-gray-800 py-1 px-2 mr-2 rounded-lg mt-2"
+              className="flex items-center bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 py-1 px-2 mr-2 rounded-lg mt-2"
             >
               <span className="mr-1">{getFlagEmoji(selectedCountry)}</span>
               {selectedCountry}
@@ -81,12 +83,12 @@ export default function Autocomplete({ options, value, onChange, error }) {
           ))}
       </div>
       {filteredOptions.length > 0 && (
-        <ul className="absolute z-10 bg-white border border-gray-300 rounded-lg mb-2 w-full max-h-40 overflow-y-auto bottom-full top-auto">
+        <ul className="absolute z-10 bg-white dark:bg-black dark:text-white border border-neutral-300 dark:border-neutral-700 rounded-lg mb-2 w-full max-h-40 overflow-y-auto bottom-full top-auto">
           {filteredOptions.map((option, index) => (
             <li
               key={index}
               onClick={() => handleOptionClick(option)}
-              className="p-2 hover:bg-gray-200 cursor-pointer flex items-center"
+              className="p-2 hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer flex items-center"
             >
               <span className="mr-2">{getFlagEmoji(option)}</span>
               {option}

@@ -23,12 +23,12 @@ export default function TravelPlan({ trips }) {
           return (
             <div
               key={index}
-              className="p-4 border border-gray-200 rounded-lg shadow-md bg-white"
+              className="p-4 border border-neutral-200 dark:border-neutral-800 rounded-lg shadow-md bg-white dark:bg-black"
             >
               <h2 className="text-lg font-bold text-green-700">
                 {trip.country}
               </h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-neutral-500">
                 {format(new Date(trip.startDate), "MMMM dd")}
                 {trip.startDate.slice(0, 4) === trip.endDate.slice(0, 4)
                   ? " → "
@@ -41,7 +41,7 @@ export default function TravelPlan({ trips }) {
                 <div className="mt-2">
                   <button
                     onClick={() => setExpanded(!expanded)}
-                    className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
+                    className="flex items-center text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-100 focus:outline-none"
                   >
                     <svg
                       className={`mr-1 w-3 h-3 transform transition-transform ${
@@ -58,7 +58,7 @@ export default function TravelPlan({ trips }) {
                   </button>
 
                   {expanded && (
-                    <ul className="mt-2 text-gray-700">
+                    <ul className="mt-2 text-neutral-700 dark:text-neutral-300">
                       {experiences.map((experience, idx) => (
                         <li key={idx}>{experience}</li>
                       ))}
@@ -70,7 +70,7 @@ export default function TravelPlan({ trips }) {
           );
         })
       ) : (
-        <p className="text-center text-gray-500">No trips planned yet!</p>
+        <p className="text-center text-neutral-500">No trips planned yet!</p>
       )}
     </div>
   );

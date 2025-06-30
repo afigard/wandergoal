@@ -144,10 +144,10 @@ export default function TravelForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg space-y-6"
+      className="bg-white dark:bg-black rounded-lg shadow-xl p-6 w-full max-w-lg space-y-6"
     >
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-1">
           I am ... years old
         </label>
         <input
@@ -155,8 +155,10 @@ export default function TravelForm() {
           name="currentAge"
           value={formData.currentAge}
           onChange={handleChange}
-          className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
-            errors.currentAge ? "border-red-500" : "border-gray-300"
+          className={`block w-full p-3 border rounded-lg text-base focus:outline-none dark:text-white dark:bg-black dark:border-neutral-700 ${
+            errors.currentAge
+              ? "border-red-500"
+              : "border-neutral-300 dark:border-neutral-700"
           }`}
           placeholder="Enter your current age"
         />
@@ -165,7 +167,7 @@ export default function TravelForm() {
         )}
       </div>
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-1">
           I want to visit ... more countries
         </label>
         <input
@@ -173,8 +175,10 @@ export default function TravelForm() {
           name="targetCountries"
           value={formData.targetCountries}
           onChange={handleChange}
-          className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
-            errors.targetCountries ? "border-red-500" : "border-gray-300"
+          className={`block w-full p-3 border rounded-lg text-base focus:outline-none dark:text-white dark:bg-black dark:border-neutral-700 ${
+            errors.targetCountries
+              ? "border-red-500"
+              : "border-neutral-300 dark:border-neutral-700"
           }`}
           placeholder="Enter your target countries"
         />
@@ -183,7 +187,7 @@ export default function TravelForm() {
         )}
       </div>
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-1">
           By the age of ...
         </label>
         <input
@@ -191,8 +195,10 @@ export default function TravelForm() {
           name="targetAge"
           value={formData.targetAge}
           onChange={handleChange}
-          className={`block w-full p-3 border rounded-lg text-base focus:outline-none ${
-            errors.targetAge ? "border-red-500" : "border-gray-300"
+          className={`block w-full p-3 border rounded-lg text-base focus:outline-none dark:text-white dark:bg-black dark:border-neutral-700 ${
+            errors.targetAge
+              ? "border-red-500"
+              : "border-neutral-300 dark:border-neutral-700"
           }`}
           placeholder="Enter your target age"
         />
@@ -201,7 +207,7 @@ export default function TravelForm() {
         )}
       </div>
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-1">
           I live in ...
         </label>
         <Autocomplete
@@ -215,7 +221,7 @@ export default function TravelForm() {
         )}
       </div>
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-1">
           And I have already been to ...
         </label>
         <Autocomplete
@@ -230,7 +236,7 @@ export default function TravelForm() {
       </div>
       <button
         type="submit"
-        className={`w-full text-white py-3 rounded-lg font-medium text-lg hover:bg-green-700 transition ${
+        className={`w-full text-white dark:text-black py-3 rounded-lg font-medium text-lg hover:bg-green-700 transition ${
           loading
             ? "bg-green-700 cursor-not-allowed"
             : "bg-gradient-to-r from-green-400 via-green-500 to-green-400"

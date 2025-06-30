@@ -5,13 +5,16 @@ import {
   FaMapMarkedAlt,
   FaBars,
   FaTimes,
+  FaMoon,
+  FaSun,
 } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
 
-const Header = () => {
+const Header = ({ dark, toggleDark }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <header className="bg-green-600 text-white shadow-lg sticky top-0 z-50">
+    <header className="bg-green-600 text-white dark:text-black shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <FiTarget size={24} />
@@ -19,7 +22,7 @@ const Header = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex items-center space-x-6">
           <Link
             href="/"
             className="hover:underline flex items-center space-x-2"
@@ -34,6 +37,22 @@ const Header = () => {
             <FaMapMarkedAlt size={20} />
             <span>Travel Plans</span>
           </Link>
+          <button
+            onClick={toggleDark}
+            className="flex items-center space-x-2 hover:underline"
+            aria-label="Toggle dark mode"
+          >
+            {dark ? (
+              <FaSun size={20} className="text-black" />
+            ) : (
+              <FaMoon size={20} className="text-white" />
+            )}
+            {dark ? (
+              <span className="text-black">Light Mode</span>
+            ) : (
+              <span className="text-white">Dark Mode</span>
+            )}
+          </button>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -67,6 +86,25 @@ const Header = () => {
               <FaMapMarkedAlt size={20} />
               <span>Travel Plans</span>
             </Link>
+            <div className="h-px bg-green-600" />
+            <button
+              className="hover:underline flex items-center space-x-2"
+              onClick={() => {
+                toggleDark();
+                setMenuOpen(false);
+              }}
+            >
+              {dark ? (
+                <FaSun size={20} className="text-black" />
+              ) : (
+                <FaMoon size={20} className="text-white" />
+              )}
+              {dark ? (
+                <span className="text-black">Light Mode</span>
+              ) : (
+                <span className="text-white">Dark Mode</span>
+              )}
+            </button>
           </div>
         </nav>
       )}

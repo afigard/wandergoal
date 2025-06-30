@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-green-600 text-white">
+    <footer className="bg-green-600 text-white dark:text-black">
       <div className="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between">
         <p className="text-sm flex items-center">
           © {new Date().getFullYear()} WanderGoal.
