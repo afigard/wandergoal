@@ -17,7 +17,9 @@ const Header = ({ dark, toggleDark }) => {
     <header className="bg-green-600 text-white dark:text-black shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <FiTarget size={24} />
+          <Link href="https://www.wandertools.online/">
+            <FiTarget size={24} />
+          </Link>
           <span className="text-xl font-bold">WanderGoal</span>
         </div>
 
