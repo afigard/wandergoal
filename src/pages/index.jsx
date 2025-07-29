@@ -2,11 +2,11 @@ import TravelForm from "../components/travel/TravelForm";
 import { useRef, useState } from "react";
 import {
   FaPlane,
-  FaBusAlt,
-  FaUmbrellaBeach,
+  FaBusSimple,
+  FaTrainTram,
   FaPassport,
-  FaGlobeAmericas,
-} from "react-icons/fa";
+  FaEarthAmericas,
+} from "react-icons/fa6";
 
 export default function Home() {
   const formRef = useRef(null);
@@ -14,10 +14,10 @@ export default function Home() {
 
   const icons = [
     FaPlane,
-    FaBusAlt,
-    FaUmbrellaBeach,
+    FaBusSimple,
+    FaTrainTram,
     FaPassport,
-    FaGlobeAmericas,
+    FaEarthAmericas,
   ];
 
   const gridSize = 6;

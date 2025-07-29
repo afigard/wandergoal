@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  FaHome,
-  FaMapMarkedAlt,
+  FaHouse,
+  FaMapLocationDot,
   FaBars,
-  FaTimes,
+  FaXmark,
   FaMoon,
   FaSun,
-} from "react-icons/fa";
+} from "react-icons/fa6";
 import { FiTarget } from "react-icons/fi";
 
 const Header = ({ dark, toggleDark }) => {
@@ -29,14 +29,14 @@ const Header = ({ dark, toggleDark }) => {
             href="/"
             className="hover:underline flex items-center space-x-2"
           >
-            <FaHome size={20} />
+            <FaHouse size={20} />
             <span>Home</span>
           </Link>
           <Link
             href="/plans"
             className="hover:underline flex items-center space-x-2"
           >
-            <FaMapMarkedAlt size={20} />
+            <FaMapLocationDot size={20} />
             <span>Travel Plans</span>
           </Link>
           <button
@@ -63,7 +63,7 @@ const Header = ({ dark, toggleDark }) => {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation menu"
         >
-          {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          {menuOpen ? <FaXmark size={24} /> : <FaBars size={24} />}
         </button>
       </div>
 
@@ -76,7 +76,7 @@ const Header = ({ dark, toggleDark }) => {
               className="hover:underline flex items-center space-x-2"
               onClick={() => setMenuOpen(false)}
             >
-              <FaHome size={20} />
+              <FaHouse size={20} />
               <span>Home</span>
             </Link>
             <div className="h-px bg-green-600" />
@@ -85,7 +85,7 @@ const Header = ({ dark, toggleDark }) => {
               className="hover:underline flex items-center space-x-2"
               onClick={() => setMenuOpen(false)}
             >
-              <FaMapMarkedAlt size={20} />
+              <FaMapLocationDot size={20} />
               <span>Travel Plans</span>
             </Link>
             <div className="h-px bg-green-600" />
